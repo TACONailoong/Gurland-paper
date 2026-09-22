@@ -1,4 +1,4 @@
-# Sharp remainder estimates and optimal localization for Gurland's ratio
+# A sharp localization constant for Gurland's ratio of the gamma function
 
 Source and numerical checks for a paper on Gurland's ratio of the gamma function,
 
