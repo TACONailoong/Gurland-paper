@@ -2,15 +2,15 @@
 
 Source and numerical checks for a paper on Gurland's ratio of the gamma function,
 
-\[
+$$
 \mathcal{G}(x,y)=\frac{\Gamma(x)\Gamma(y)}{\Gamma^{2}\bigl(\tfrac{x+y}{2}\bigr)}.
-\]
+$$
 
-The Jensen gap of \(\log\Gamma\) has an exact expansion in Hurwitz zeta values, and that expansion converges for every \(x,y>0\). This answers two open problems of Wiśniewska (arXiv:2512.07028) and shows that the hypothesis \(Q<1\) is redundant. The paper also proves two-sided remainder estimates at the optimal rate \(\rho=|x-y|/(x+y+2)\), gives the large-argument asymptotics, extends the expansion to several variables, and localizes the mean-value parameter \(t(x,y)\). The constant \(2/3\) in
+The Jensen gap of $\log\Gamma$ has an exact expansion in Hurwitz zeta values, and that expansion converges for every $x,y>0$. This answers two open problems of Wiśniewska (arXiv:2512.07028) and shows that the hypothesis $Q<1$ is redundant. The paper also proves two-sided remainder estimates at the optimal rate $\rho=|x-y|/(x+y+2)$, gives the large-argument asymptotics, extends the expansion to several variables, and localizes the mean-value parameter $t(x,y)$. The constant $2/3$ in
 
-\[
-\frac{t(x,y)-\sqrt{xy}}{\tfrac{x+y}{2}-\sqrt{xy}}>\frac23
-\]
+$$
+\frac{t(x,y)-\sqrt{xy}}{\tfrac{x+y}{2}-\sqrt{xy}}>\frac{2}{3}
+$$
 
 is sharp and is not attained.
 
