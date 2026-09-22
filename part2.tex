@@ -1,0 +1,457 @@
+
+\section{Proofs}
+
+\subsection{Proof of Theorem \ref{thm:main}}
+Let $v>0$ and put $\Omega=\{z\in\mathbb{C}:\operatorname{Re}z>0\}$. The principal branch of
+$\log\Gamma$ is holomorphic on $\Omega$, and the disc $D(v,v)=\{z:|z-v|<v\}$ is contained in
+$\Omega$. The nearest singularities of $\log\Gamma$ to $v$ are the poles of $\Gamma$ at
+$0,-1,-2,\dots$, all at distance $\ge v$ from $v$, and $|0-v|=v$; hence the Taylor series of
+$\log\Gamma$ about $v$ has radius of convergence exactly $v$ and converges to $\log\Gamma$
+on $D(v,v)$.
+
+Fix $u$ with $|u|<v$. Then $v\pm u\in D(v,v)$ and
+\[
+  \log\Gamma(v+w)=\log\Gamma(v)+\sum_{n=1}^{\infty}\frac{\psi^{(n-1)}(v)}{n!}\,w^{n},
+  \qquad |w|<v ,
+\]
+where $\psi=\Gamma'/\Gamma$ and $\psi^{(n)}$ are the polygamma functions. Evaluating at
+$w=u$ and $w=-u$ and adding,
+\[
+  \log\Gamma(v+u)+\log\Gamma(v-u)-2\log\Gamma(v)
+   =2\sum_{k=1}^{\infty}\frac{\psi^{(2k-1)}(v)}{(2k)!}\,u^{2k}.
+\]
+The relation $\psi^{(n)}(z)=(-1)^{n+1}n!\,\zeta(n+1,z)$ for $\operatorname{Re}z>0$
+(see e.g.\ \cite[\S5.15]{DLMF}) gives, for $n=2k-1$,
+$\psi^{(2k-1)}(v)=(2k-1)!\,\zeta(2k,v)$. Therefore
+\[
+  \log\Gg(x,y)=2\sum_{k=1}^{\infty}\frac{(2k-1)!}{(2k)!}\,\zeta(2k,v)\,u^{2k}
+   =\sum_{k=1}^{\infty}\frac{u^{2k}}{k}\,\zeta(2k,v),
+\]
+which is \eqref{eq:main1}; its region of convergence is $|u|<v$, i.e.\
+$\{|x-y|<x+y\}$, and since all terms are non-negative the convergence is absolute. The
+same argument applied to $z\mapsto\log\Gamma(1+z)$ at the point $1+v$, whose singularities
+are $\{-1,-2,-3,\dots\}$ and hence lie at distance $\ge1+v$ from $1+v$, with equality at
+$-1$, yields \eqref{eq:main2} with convergence exactly for $|u|<1+v$, i.e.\ for
+$|x-y|<2+x+y$. Finally, $|x-y|<x+y$ and $|x-y|<2+x+y$ both hold for all $x,y>0$; the first
+fails for $(x,y)=(1,-\tfrac12)$ and the second for $(x,y)=(3,-2)$, so the stated regions are
+optimal. \qed
+
+\subsection{Proof of Corollary \ref{cor:open12}}
+By Theorem \ref{thm:main}, for every $x,y>0$ the series \eqref{eq:main2} converges and all
+its terms are positive. Hence
+$R^{m}_{n}(x,y)=\sum_{k=m}^{\infty}\frac{u^{2k}}{k}\zeta(2k,1+v)$
+is the tail of a convergent series of positive terms; it is positive and decreases to $0$.
+This is precisely Open Problems 1 and 2. The final claim is Proposition
+\ref{prop:compare}. \qed
+
+\subsection{Proof of Theorem \ref{thm:rem}}
+Put $A=1+v$, $c=|u|$, $\rho=c/A\in(0,1)$. We use the integral-test estimate
+\begin{equation}\label{eq:zetabnd}
+  \zeta(2k,A)\;\le\;A^{-2k}\Big(1+\frac{A}{2k-1}\Big),\qquad k\ge1,\ A>0,
+\end{equation}
+obtained from
+$\zeta(2k,A)=\sum_{n\ge0}(n+A)^{-2k}\le A^{-2k}+\int_{0}^{\infty}(t+A)^{-2k}dt$.
+
+\emph{Lower bound.} All terms of the tail are positive, so
+$R_m\ge\frac{u^{2m}}{m}\zeta(2m,A)$.
+
+\emph{Upper bound.} By \eqref{eq:zetabnd},
+\[
+  R_m\le\sum_{k=m}^{\infty}\frac{c^{2k}}{k}A^{-2k}\Big(1+\frac{A}{2k-1}\Big)
+   \le\Big(1+\frac{A}{2m-1}\Big)\sum_{k=m}^{\infty}\frac{\rho^{2k}}{k}
+   =\Big(1+\frac{A}{2m-1}\Big)\rho^{2m}\sum_{j=0}^{\infty}\frac{\rho^{2j}}{m+j},
+\]
+and $\sum_{j\ge0}\frac{\rho^{2j}}{m+j}\le\frac{1}{m(1-\rho^{2})}$, which is
+\eqref{eq:rembnd} for $\Gs$.
+
+\emph{Optimality.} Let $x\ne y$, so $c>0$ and $\rho\in(0,1)$. Write
+$\zeta(2m,A)=A^{-2m}(1+\eps_m)$; since
+$\sum_{n\ge1}\big(\frac{A}{n+A}\big)^{2m}\le\int_0^{\infty}\big(\frac{A}{A+t}\big)^{2m}dt
+=\frac{A}{2m-1}$, we have $0\le\eps_m\le\frac{A}{2m-1}\to0$. Hence
+$R_m\ge\frac{c^{2m}}{m}\zeta(2m,A)=\frac{1+\eps_m}{m}\rho^{2m}$, so
+$\frac1m\log R_m\ge2\log\rho+o(1)$; conversely \eqref{eq:rembnd} gives
+$\frac1m\log R_m\le2\log\rho+\frac1m\log\frac{1+\frac{A}{2m-1}}{m(1-\rho^{2})}
+=2\log\rho+o(1)$. The proof for $\Gg$ is identical with $A$ replaced by $v$; there
+$\zeta(2k,v)\le v^{-2k}(1+\frac{v}{2k-1})$ and $\rho_{\Gg}=c/v$. \qed
+
+\subsection{Proof of Proposition \ref{prop:compare}}
+Since $x+y\ge2\sqrt{xy}$, $\rho=\frac{|x-y|}{2+x+y}\le\frac{|x-y|}{2+2\sqrt{xy}}=Q$, with
+equality iff $x=y$. Also $|x-y|<x+y<2+x+y$, so $\rho<1$. Finally
+$Q(x,1)=\frac{x-1}{2(1+\sqrt x)}\sim\frac{\sqrt x}{2}\to\infty$. \qed
+
+\subsection{Proof of Corollary \ref{cor:bil}}
+The two-sided inequality is Theorem \ref{thm:rem} restated, and
+$S_{m}\to\log\Gs(x,y)$ as $m\to\infty$ by Corollary \ref{cor:open12}. It remains to
+compare, at $m=2$, the correction in \eqref{eq:rembnd} with the gain over the upper
+bound of \eqref{eq:Wbil}. Write $s=\sqrt{xy}$, $c=|u|$ and $A=1+v$, so that
+$\rho=c/A$ and
+\[
+  c^{2}\big[\zeta(2,1+s)-\zeta(2,1+v)\big]
+  =2c^{2}\int_{1+s}^{1+v}\zeta(3,z)\,dz
+  \;\ge\;2c^{2}\int_{1+s}^{1+v}\frac{dz}{2z^{2}}
+  =\frac{c^{2}(v-s)}{(1+s)(1+v)},
+\]
+because $\zeta(3,z)=\sum_{n\ge0}(n+z)^{-3}\ge\int_{0}^{\infty}(t+z)^{-3}dt=\frac{1}{2z^{2}}$
+(the integrand decreases, so $\int_{n}^{n+1}(t+z)^{-3}dt\le(n+z)^{-3}$ for every $n\ge0$).
+Since $v-s=\frac{v^{2}-s^{2}}{v+s}=\frac{c^{2}}{v+s}$ and $(v+s)(1+s)\le2v(1+v)$, the gain
+is at least $\frac{c^{4}}{2v(1+v)^{2}}$. The correction in \eqref{eq:rembnd} at $m=2$ is
+\[
+  \frac{\rho^{4}}{2(1-\rho^{2})}\Big(1+\frac{A}{3}\Big)
+  =\frac{c^{4}(A+3)}{6A^{4}(1-\rho^{2})},
+\]
+which is smaller as soon as $\frac{v(A+3)}{3A^{2}(1-\rho^{2})}<1$. As
+$\frac{v(A+3)}{3A^{2}}=\frac{v(v+4)}{3(v+1)^{2}}\le\frac49$, with equality at $v=2$, this
+holds whenever $\rho<\frac{\sqrt5}{3}$. \qed
+
+\subsection{Proof of Theorem \ref{thm:partial}}
+Fix $v>0$ and let $c\in[0,v)$ vary, with $s=s(c)=\sqrt{v^{2}-c^{2}}$, $A=1+v$ and
+$\Phi(c)=\log\Gs(x,y)/c^{2}$ for the pair $x=v+c$, $y=v-c$. Put
+\[
+  R(c):=\zeta\big(2,A-\Delta(c)\big)-\Phi(c),\qquad \Delta(c)=\frac{c^{2}}{3(v+s)}=\frac{v-s}{3}.
+\]
+Since $z\mapsto\zeta(2,z)$ is strictly decreasing and $\zeta(2,1+t)=\Phi(c)$, while
+$\frac{2v+s}{3}=A-\Delta$, we have
+\begin{equation}\label{eq:Rred}
+  \theta>\tfrac23\iff t>\frac{2v+s}{3}\iff\zeta\big(2,A-\Delta\big)>\Phi\iff R(c)>0 .
+\end{equation}
+By Theorem \ref{thm:main}, $\Phi(c)=\sum_{k\ge1}\frac{c^{2k-2}}{k}\zeta(2k,A)$ is a power
+series in $c^{2}$ whose radius of convergence is $A>v$; hence $R$ is differentiable on
+$(0,v)$ and $R(0)=0$. It therefore suffices to prove $R'(c)>0$ for $0<c<v$. Using
+$\Delta'=\frac{c}{3s}$ and $\partial_{\Delta}\zeta(2,A-\Delta)=2\zeta(3,A-\Delta)$,
+\[
+  R'(c)=2\zeta\big(3,A-\Delta(c)\big)\,\Delta'(c)-\Phi'(c)
+        =\frac{2c\,\zeta(3,A-\Delta(c))}{3s}-\frac{2}{c}E(c),
+\]
+where $E(c):=\sum_{m\ge1}\frac{m}{m+1}c^{2m}\zeta(2m+2,A)$.
+Since $n+A\ge A$, we have $\zeta(2m+2,A)\le A^{-(2m-2)}\zeta(4,A)$ for $m\ge1$, so with
+$\rho=c/A$,
+\[
+  E(c)\;\le\;c^{2}\zeta_{4}\sum_{m\ge1}\frac{m}{m+1}\rho^{2m-2}
+  \;\le\;c^{2}\zeta_{4}\Big(\frac12+\frac{\rho^{2}}{1-\rho^{2}}\Big)
+  \;=\;\frac{c^{2}\zeta_{4}(1+\rho^{2})}{2(1-\rho^{2})} .
+\]
+Moreover $\zeta(3,A-\Delta)>\zeta(3,A)$, and the trapezoid and midpoint rules applied to
+the convex decreasing functions $t\mapsto(t+A)^{-3}$ and $t\mapsto(t+A)^{-4}$ give
+\[
+  \zeta(3,A)\;\ge\;\int_{0}^{\infty}\!\!\frac{dt}{(t+A)^{3}}+\frac{1}{2A^{3}}
+   =\frac{A+1}{2A^{3}},\qquad
+  \zeta(4,A)\;\le\;\int_{-1/2}^{\infty}\!\!\frac{dt}{(t+A)^{4}}
+   =\frac{1}{3(A-\frac12)^{3}} ,
+\]
+whence
+\begin{equation}\label{eq:ratio}
+  \frac{\zeta(4,A)}{\zeta(3,A)}\;\le\;\frac{2A^{3}}{3(A-\frac12)^{3}(A+1)} .
+\end{equation}
+Inserting these two estimates, $R'(c)>0$ holds as soon as
+$\frac1s>\frac{A^{3}(1+\rho^{2})}{(A-\frac12)^{3}(A+1)(1-\rho^{2})}$, and since $s\le v=A-1$
+it is enough that $\Psi(A)\,\frac{1+\rho^{2}}{1-\rho^{2}}<1$, where
+$\Psi(A)=\frac{(A-1)A^{3}}{(A-\frac12)^{3}(A+1)}$. The elementary inequality
+\begin{equation}\label{eq:Psibnd}
+  \Psi(A)\;\le\;1-\frac{1}{3A}\qquad(A>1)
+\end{equation}
+holds: the difference between the two sides equals
+$\frac{4A^{4}-14A^{3}+21A^{2}-8A+1}{3A(A+1)(2A-1)^{3}}$, and substituting $t=A-1>0$ its
+numerator becomes $4t^{4}+2t^{3}+3t^{2}+8t+4>0$, all coefficients being positive. Consequently $R'(c)>0$ whenever
+$\rho^{2}<\frac{1}{6A-1}$, that is for all $c$ with $c^{2}<\frac{A^{2}}{6A-1}$; as
+$\frac{A^{2}}{6A-1}>\frac A6$, this covers every $c$ with $c^{2}\le\frac A6$, which is
+\eqref{eq:partialcond}. Hence $R>0$ on $(0,c]$ and, by \eqref{eq:Rred}, $\theta>\frac23$.
+\qed
+
+\subsection{Proof of Theorem \ref{thm:asym}}
+If $c_{j}=0$, i.e.\ $x_{j}=y_{j}$ for some $j$, then $\log\Gs(x_{j},y_{j})=0$ and the
+assertion is trivial, so we may assume $c_{j}>0$. Put $A_{j}=1+v_{j}$, $c_{j}=|u_{j}|$,
+$\rho_{j}=c_{j}/A_{j}\in(0,1)$, so $\rho_{j}\to\rho_{0}$ and
+$\Phi_{j}:=\frac{\log\Gs(x_{j},y_{j})}{c_{j}^{2}}
+=\sum_{k\ge1}\frac{c_{j}^{2k-2}}{k}\zeta(2k,A_{j})$. Set
+$h_{k}(A):=\frac{A^{2k-1}}{k}\zeta(2k,A)$, so that
+$A_{j}\Phi_{j}=\sum_{k\ge1}\rho_{j}^{2k-2}h_{k}(A_{j})$. Since
+$\frac{A^{2k-1}}{(n+A)^{2k}}=\frac1A\big(\frac{A}{n+A}\big)^{2k}$ and
+$t\mapsto\big(\frac{A}{A+t}\big)^{2k}$ is decreasing, the integral test gives, for all
+$k\ge1$ and $A>0$,
+\begin{equation}\label{eq:EM}
+  0\;\le\;h_{k}(A)\;=\;\frac{1}{kA}\sum_{n\ge0}\Big(\frac{A}{n+A}\Big)^{2k}
+  \;\le\;\frac{1}{kA}\Big(1+\int_{0}^{\infty}\Big(\frac{A}{A+t}\Big)^{2k}dt\Big)
+  \;=\;\frac{1}{kA}+\frac{1}{k(2k-1)} .
+\end{equation}
+Hence, for any $\rho_{1}$ with $\rho_{0}<\rho_{1}<1$ and all large $j$,
+\[
+  \rho_{j}^{2k-2}h_{k}(A_{j})\;\le\;\rho_{1}^{2k-2}\Big(\frac{1}{k}+\frac{1}{k(2k-1)}\Big)
+  \qquad(k\ge1),
+\]
+and the dominating series converges, so dominated convergence applies. On the other hand,
+for each fixed $k$ the Riemann sum $\frac1A\sum_{n\ge0}\big(\frac{A}{n+A}\big)^{2k}$
+converges to $\int_{0}^{\infty}(1+t)^{-2k}dt=\frac{1}{2k-1}$ as $A\to\infty$, so
+$h_{k}(A)\to\frac{1}{k(2k-1)}$. Therefore, by the definition \eqref{eq:H} of $H$,
+\[
+  A_{j}\Phi_{j}\;\longrightarrow\;\sum_{k\ge1}\frac{\rho_{0}^{2k-2}}{k(2k-1)}
+   =H(\rho_{0}),
+\]
+the case $\rho_{0}=0$ being the definition $H(0)=1$, and the case $\rho_{0}>0$ following
+from the identity $\sum_{k\ge1}z^{k-1}/\big(k(2k-1)\big)=\Lambda(\sqrt z)/z$ for $0<z<1$,
+which is obtained by integrating $\sum_{k\ge1}z^{k-1}/(2k-1)=\arsh\sqrt z/\sqrt z$ term by
+term. Since $c_{j}=A_{j}\rho_{j}$, the identity $\log\Gs=c_{j}^{2}\Phi_{j}$ reads
+$\log\Gs=\rho_{j}^{2}A_{j}\cdot A_{j}\Phi_{j}$; as $H$ is continuous at $\rho_{0}$,
+\[
+  \log\Gs(x_{j},y_{j})
+   =\frac{u_{j}^{2}}{1+v_{j}}\,H(\rho_{j})\big(1+o(1)\big)
+   =(1+v_{j})\,\Lambda(\rho_{j})\big(1+o(1)\big),
+\]
+the second equality being $\Lambda(\rho)=\rho^{2}H(\rho)$. The proof for $\Gg$ is the same
+with $A_{j}$ replaced by $v_{j}$ and $\rho_{j}$ by $|u_{j}|/v_{j}$, and gives
+$\log\Gg=\frac{u_{j}^{2}}{v_{j}}H\big(\frac{|u_{j}|}{v_{j}}\big)(1+o(1))$. \qed
+
+\subsection{Proof of Theorem \ref{thm:multi}}
+Each $x_{i}$ satisfies $|x_{i}-\bar x|<\bar x$, so $x_{i}$ lies in the disc
+$D(\bar x,\bar x)\subset\{\operatorname{Re}z>0\}$ on which $\log\Gamma$ is holomorphic with
+radius of convergence exactly $\bar x$. Hence
+\[
+  \log\Gamma(x_{i})=\log\Gamma(\bar x)+\sum_{m\ge1}\frac{\psi^{(m-1)}(\bar x)}{m!}
+   (x_{i}-\bar x)^{m}
+\]
+converges for every $i$. Summing over $i$ and using $\sum_{i}(x_{i}-\bar x)=0$,
+\[
+  \sum_{i=1}^{n}\log\Gamma(x_{i})-n\log\Gamma(\bar x)
+  =\sum_{m\ge2}\frac{\psi^{(m-1)}(\bar x)}{m!}\,m_{m}
+  =\sum_{m\ge2}\frac{(-1)^{m}}{m}\zeta(m,\bar x)\,m_{m},
+\]
+which is \eqref{eq:multi}; absolute convergence follows from
+$|m_{m}|\le n\max_{i}|x_{i}-\bar x|^{m}$ and $|x_{i}-\bar x|<\bar x$. The inequality is
+Jensen's inequality for the convex function $\log\Gamma$, with equality only when all
+$x_{i}$ coincide. \qed
+
+\subsection{Proof of Theorem \ref{thm:loc}}
+
+\emph{(i) Uniqueness.} The function $g(z)=\zeta(2,1+z)$ is continuous and strictly decreasing
+on $(0,\infty)$. By \eqref{eq:Wbil} and the positivity of the terms of \eqref{eq:main2},
+\[
+  \Big(\frac{x-y}{2}\Big)^{2}\zeta(2,1+v)\le\log\Gs(x,y)\le
+  \Big(\frac{x-y}{2}\Big)^{2}\zeta(2,1+s),
+\]
+so $\Phi:=\log\Gs(x,y)/c^{2}$ satisfies $g(v)\le\Phi\le g(s)$, both inequalities being
+strict for $x\ne y$. Hence exactly one $t\in(s,v)$ satisfies $g(t)=\Phi$.
+
+\emph{(ii) The bracket.} Write $\delta=v-t\in(0,v-s)$ and $A=1+v$. From \eqref{eq:main2},
+\begin{equation}\label{eq:keyid}
+  \Phi=\zeta(2,A)+\frac{c^{2}}{2}\zeta(4,A)+T',\qquad
+   T':=\sum_{k\ge3}\frac{c^{2k-2}}{k}\zeta(2k,A)\ge0 .
+\end{equation}
+Taylor expansion of $z\mapsto\zeta(2,z)$ about $A$, all of whose terms are positive, gives
+\begin{equation}\label{eq:taylor}
+  \zeta(2,A-\delta)=\zeta(2,A)+2\delta\zeta(3,A)+3\delta^{2}\zeta(4,A)+S',
+  \qquad S':=\sum_{j\ge3}(j+1)\delta^{j}\zeta(j+2,A)\ge0 .
+\end{equation}
+Since $\zeta(2,A-\delta)=\Phi$, subtraction yields
+\begin{equation}\label{eq:balance}
+  2\delta\zeta(3,A)+3\delta^{2}\zeta(4,A)+S'=\frac{c^{2}}{2}\zeta(4,A)+T' .
+\end{equation}
+For the lower bound write $\zeta_{j}:=\zeta(j,A)$ and put
+\begin{equation}\label{eq:d0}
+  \delta_{0}:=\frac{c^{2}\zeta_{4}}{4\zeta_{3}+6v\zeta_{4}} .
+\end{equation}
+We prove $\Phi>\zeta(2,A-\delta_{0})$, which by strict decrease of $z\mapsto\zeta(2,z)$
+gives $\delta>\delta_{0}$, i.e.\ the lower bound in \eqref{eq:locbnd}. By \eqref{eq:keyid}
+we have $\Phi\ge\zeta_{2}+\frac{c^{2}}{2}\zeta_{4}$ (as $T'\ge0$), while by
+\eqref{eq:taylor},
+$\zeta(2,A-\delta_{0})=\zeta_{2}+2\delta_{0}\zeta_{3}+3\delta_{0}^{2}\zeta_{4}+S'_{0}$
+with $S'_{0}:=\sum_{j\ge3}(j+1)\delta_{0}^{j}\zeta_{j+2}\ge0$. It therefore suffices to
+verify
+\begin{equation}\label{eq:lbmargin}
+  S'_{0}\;<\;\frac{c^{2}}{2}\zeta_{4}-2\delta_{0}\zeta_{3}-3\delta_{0}^{2}\zeta_{4}
+  \;=\;3\,\delta_{0}\zeta_{4}\,(v-\delta_{0}),
+\end{equation}
+the equality following from \eqref{eq:d0} together with
+$\delta_{0}(2\zeta_{3}+3v\zeta_{4})=\frac{c^{2}}{2}\zeta_{4}$.
+
+Now $\delta_{0}<\frac{c^{2}\zeta_{4}}{6v\zeta_{4}}=\frac{c^{2}}{6v}<\frac v6$, so
+$\delta_{0}<\frac v6<v<A$. Put $\sigma:=\delta_{0}/A\in(0,\frac16)$. Since $n+A\ge A$ for
+$n\ge0$, we have $\zeta_{j+2}\le A^{-(j-2)}\zeta_{4}$ for $j\ge2$, and hence
+\[
+  S'_{0}\le\zeta_{4}A^{2}\sum_{j\ge3}(j+1)\sigma^{j}
+   =\zeta_{4}A^{2}\,\frac{\sigma^{3}(4-3\sigma)}{(1-\sigma)^{2}} .
+\]
+As $\sigma<\frac16$ we have $\frac{4-3\sigma}{(1-\sigma)^{2}}\le\frac{4}{(5/6)^{2}}
+=\frac{144}{25}$, and as $\delta_{0}<\frac v6$ we have $3(v-\delta_{0})>\frac{5v}{2}$.
+Moreover $\delta_{0}<\frac{c^{2}}{6v}<\frac{v}{6}$, so $\delta_{0}^{2}<\frac{v^{2}}{36}$.
+Therefore \eqref{eq:lbmargin} follows from
+\[
+  \zeta_{4}\,\frac{\delta_{0}^{2}}{A}\cdot\frac{144}{25}\;\le\;\zeta_{4}\cdot\frac{5v}{2},
+  \qquad\text{which is implied by}\qquad
+  \frac{144}{25}\cdot\frac{v^{2}}{36A}\;\le\;\frac{5v}{2},
+\]
+and the last inequality reads $\frac{4v^{2}}{25A}\le\frac{5v}{2}$, i.e.\
+$\frac{8v}{25}\le5(1+v)$, which holds for every $v>0$. This proves the lower bound.
+
+For the upper bound we estimate $T'$. Since $n+A\ge A$, for $k\ge2$ and $n\ge0$ we have
+$(n+A)^{-2k}\le A^{-(2k-4)}(n+A)^{-4}$, hence $\zeta(2k,A)\le A^{-(2k-4)}\zeta(4,A)$;
+therefore, substituting $k=j+3$ in the sum,
+\[
+  T'\le\zeta(4,A)\sum_{k\ge3}\frac{c^{2k-2}}{kA^{2k-4}}
+   =\frac{\zeta(4,A)c^{4}}{A^{2}}\sum_{j\ge0}\frac{\rho^{2j}}{j+3}
+   \le\frac{\zeta(4,A)c^{4}}{A^{2}}\cdot\frac{1}{3(1-\rho^{2})}
+   =\frac{c^{2}}{2}\zeta(4,A)\cdot\frac{2\rho^{2}}{3(1-\rho^{2})},
+\]
+where we used $\frac{1}{j+3}\le\frac13$ and $\rho<1$. Inserting this into
+\eqref{eq:balance} and dropping $S'\ge0$ gives
+$2\delta\zeta(3,A)\le\frac{c^{2}}{2}\zeta(4,A)\big(1+\frac{2\rho^{2}}{3(1-\rho^{2})}\big)$,
+the upper bound in \eqref{eq:locbnd}.
+
+\emph{(iii) Asymptotics.} Write $\zeta_{j}:=\zeta(j,A)$. From
+$\Phi=\zeta_{2}+\frac{c^{2}}{2}\zeta_{4}+\frac{c^{4}}{3}\zeta_{6}+O(c^{6})$ and
+$\zeta(2,A-\delta)=\zeta_{2}+2\delta\zeta_{3}+3\delta^{2}\zeta_{4}+O(\delta^{3})$,
+equating and inserting $\delta=\alpha c^{2}+\beta c^{4}+O(c^{6})$ gives
+$2\zeta_{3}\alpha=\frac{\zeta_{4}}{2}$ and
+$2\zeta_{3}\beta+3\zeta_{4}\alpha^{2}=\frac{\zeta_{6}}{3}$, that is
+$\alpha=\frac{\zeta_{4}}{4\zeta_{3}}$ and
+$\beta=\frac{1}{2\zeta_{3}}\big[\frac{\zeta_{6}}{3}
+-\frac{3\zeta_{4}^{3}}{16\zeta_{3}^{2}}\big]$, which is \eqref{eq:locasym}.
+
+\emph{(iv) Condition (A).} By (ii) it suffices that
+$\frac{c^{2}\zeta_{4}}{4\zeta_{3}}\big(1+\frac{2\rho^{2}}{3(1-\rho^{2})}\big)
+<\frac{v-s}{2}=\frac{c^{2}}{2(v+s)}$, i.e.
+$\frac{(v+s)\zeta_{4}}{2\zeta_{3}}\big(1+\frac{2\rho^{2}}{3(1-\rho^{2})}\big)<1$.
+Term-wise, $(v+s)\zeta_{4}\le\frac{v+s}{1+v}\zeta_{3}$, because
+$\frac{v+s}{(n+A)^{4}}\le\frac{2}{(n+A)^{3}}$ is equivalent to $v+s\le2(n+1+v)$, true for
+all $n\ge0$ since $s<v$. Hence \eqref{eq:condA} is sufficient.
+
+\emph{(iv) Condition (B).} Put $K(\xi)=\frac{1}{c^{2}}\log\frac{1}{1-c^{2}/\xi^{2}}$ and
+$L(\xi)=(\xi-w)^{-2}$ with $w=\frac{v-s}{2}$. With $a=A=1+v$,
+\[
+  \sum_{m\ge1}K(m+v)=\sum_{n\ge0}K(a+n)=\Phi,\qquad
+  \sum_{m\ge1}L(m+v)=\sum_{n\ge0}\frac{1}{(n+1+\frac{v+s}{2})^{2}}
+   =\zeta\Big(2,1+\frac{v+s}{2}\Big),
+\]
+so $t>\frac{v+s}{2}\iff\Phi<\zeta\big(2,1+\frac{v+s}{2}\big)
+\iff\sum_{n\ge0}(K-L)(a+n)<0$. On $[v+\frac12,\infty)$ both $K$ and $L$ are positive,
+decreasing and convex: $L''=6(\xi-w)^{-4}>0$, while
+$K'(\xi)=-\frac{2}{\xi^{3}-c^{2}\xi}$ and
+$K''(\xi)=\frac{2(3\xi^{2}-c^{2})}{(\xi^{3}-c^{2}\xi)^{2}}>0$ because
+$\xi\ge v+\frac12>v>c>c/\sqrt3$. For a convex decreasing $f$ with $f(\infty)=0$ the
+midpoint rule $\int_{k-1/2}^{k+1/2}f\ge f(k)$ gives
+$\sum_{n\ge0}f(a+n)\le\int_{a-1/2}^{\infty}f$, and the trapezoid rule
+$\int_{k}^{k+1}f\le\frac{f(k)+f(k+1)}{2}$ gives
+$\sum_{n\ge0}f(a+n)\ge\int_{a}^{\infty}f+\frac{f(a)}{2}$. Applying these to $K$ and $L$,
+\[
+  \sum_{n\ge0}(K-L)(a+n)\;\le\;\int_{v+1/2}^{\infty}K
+   -\int_{a}^{\infty}L-\frac{L(a)}{2}
+   \;=\;\int_{v+1/2}^{\infty}K-\frac{1}{A-w}-\frac{1}{2(A-w)^{2}}
+   \;=\;\mathcal{E}(x,y),
+\]
+and $\int_{B}^{\infty}K$ is \eqref{eq:intK}, obtained by elementary integration. Hence
+$\mathcal{E}(x,y)<0$ is sufficient for $t>\frac{v+s}{2}$. \qed
+
+\section{Applications}\label{sec:app}
+
+\subsection{Sharpened Gurland inequalities}
+Since $\log\Gg(x,y)=\sum_{k\ge1}\frac{u^{2k}}{k}\zeta(2k,v)$ with all terms positive, and
+since $\zeta(2k,v)\le v^{-2k}\big(1+\frac{v}{2k-1}\big)$ by the integral test, we obtain a
+two-sided refinement of Gurland's inequality \cite{Gurland56}.
+
+\begin{corollary}\label{cor:gurland}
+For all $x\ne y>0$, with $v=\frac{x+y}{2}$ and $\rho_{\Gg}=\frac{|x-y|}{x+y}$,
+\[
+  \frac{(x-y)^{2}}{4}\,\zeta\Big(2,\frac{x+y}{2}\Big)\;\le\;\log\Gg(x,y)\;\le\;
+  -\log\big(1-\rho_{\Gg}^{2}\big)+v\,\Lambda(\rho_{\Gg}),
+\]
+and $\Gg(x,y)>\exp\big(\frac{(x-y)^{2}}{4}\zeta(2,\frac{x+y}{2})\big)>1$. Moreover
+$\log\Gg(x,y)>\frac{(x-y)^{2}}{2(x+y)}$.
+\end{corollary}
+
+\begin{proof}
+The lower bound is the first term of \eqref{eq:main1}. For the upper bound, the
+terms of $\zeta(2k,v)=\sum_{n\ge0}(n+v)^{-2k}$ with $n\ge1$ are dominated by the
+integral over $[0,\infty)$: since $(t+v)^{-2k}$ decreases,
+$\int_{n-1}^{n}(t+v)^{-2k}dt>(n+v)^{-2k}$ for every $n\ge1$, so
+$\zeta(2k,v)\le v^{-2k}+\int_{0}^{\infty}(t+v)^{-2k}dt
+=v^{-2k}\big(1+\frac{v}{2k-1}\big)$; then, with $\rho=\rho_{\Gg}$,
+\[
+  \log\Gg(x,y)\le\sum_{k\ge1}\frac{u^{2k}}{k}\Big(\frac{1}{v^{2k}}
+   +\frac{v^{1-2k}}{2k-1}\Big)
+  =\sum_{k\ge1}\frac{\rho^{2k}}{k}+v\sum_{k\ge1}\frac{\rho^{2k}}{k(2k-1)}
+  =-\log\big(1-\rho^{2}\big)+v\,\Lambda(\rho).
+\]
+The last claim uses
+$\zeta(2,v)=\sum_{n\ge0}(n+v)^{-2}>\int_{0}^{\infty}(t+v)^{-2}dt=\frac1v$,
+because $\int_{n}^{n+1}(t+v)^{-2}dt<(n+v)^{-2}$ for every $n\ge0$.
+\end{proof}
+
+\subsection{Bounds for the beta function}
+Recall $B(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$ and the duplication formula
+$\Gamma(2v)=\frac{2^{2v-1}}{\sqrt\pi}\Gamma(v)\Gamma(v+\frac12)$, where $v=\frac{x+y}{2}$.
+Hence $B(x,y)=\Gg(x,y)\frac{\sqrt\pi\,\Gamma(v)}{2^{2v-1}\Gamma(v+\frac12)}$. Combining
+Corollary \ref{cor:gurland} with Gautschi's inequality
+$v^{1/2}<\frac{\Gamma(v+1)}{\Gamma(v+1/2)}<(v+1)^{1/2}$ \cite{Gautschi74} yields the
+following.
+
+\begin{corollary}\label{cor:beta}
+For all $x,y>0$, with $v=\frac{x+y}{2}$ and $\rho_{\Gg}=\frac{|x-y|}{x+y}$,
+\[
+  \frac{\sqrt\pi\;v^{-1/2}}{2^{2v-1}}\,
+   e^{\frac{(x-y)^{2}}{4}\zeta(2,v)}
+  \;<\;B(x,y)\;<\;
+  \frac{\sqrt\pi\,(v+1)^{1/2}}{2^{2v-1}\,v}\,
+   e^{\,v\Lambda(\rho_{\Gg})-\log(1-\rho_{\Gg}^{2})}.
+\]
+\end{corollary}
+
+\begin{proof}
+Gautschi's inequality with $s=\frac12$ and $x=v$ reads
+$v^{1/2}<\frac{\Gamma(v+1)}{\Gamma(v+1/2)}<(v+1)^{1/2}$; since $\Gamma(v+1)=v\Gamma(v)$,
+this gives $v^{-1/2}<\frac{\Gamma(v)}{\Gamma(v+1/2)}<\frac{(v+1)^{1/2}}{v}$. Insert this
+into the expression for $B(x,y)$ and use Corollary \ref{cor:gurland}.
+\end{proof}
+
+\begin{example}
+For $(x,y)=(1,2)$ one has $v=\frac32$, $\rho_{\Gg}=\frac13$, $\Gg(1,2)=1.273240\ldots$
+and $B(1,2)=\frac12$. The bounds of Corollary \ref{cor:beta} read
+$0.457050<0.5<0.622777$.
+\end{example}
+
+\subsection{Certified computation}
+The two-sided estimate \eqref{eq:rembnd} turns the expansion into an algorithm with a
+certified error.
+
+\begin{corollary}\label{cor:alg}
+Let $x\ne y>0$, $\rho=\rho(x,y)\in(0,1)$, $A=1+v$ and $0<\eps<\tfrac12$. If
+\[
+  m\;\ge\;\Big\lceil\frac{\log\big((1+A)/(\eps(1-\rho^{2}))\big)}{2\log(1/\rho)}\Big\rceil ,
+\]
+then $\big|\log\Gs(x,y)-S_m(x,y)\big|\le\eps$. Moreover, for fixed $x,y$ the number of
+terms required does not exceed
+\[
+  \frac{\log(1/\eps)+\log(2+v)+\frac{1}{1-\rho}}{2\,(1-\rho)},
+\]
+so it is $O\big(\frac{\log(1/\eps)}{1-\rho}\big)$ as $\eps\to0$, the implied constant
+being absolute; the arguments enter only through $\rho$ and through the additive
+term $\log(2+v)$, which is independent of $\eps$.
+\end{corollary}
+
+\begin{proof}
+For every $m\ge1$ we have $2m-1\ge1$, hence $1+\frac{A}{2m-1}\le1+A$ and $\frac1m\le1$;
+therefore \eqref{eq:rembnd} gives
+$0\le R_m\le\frac{(1+A)\rho^{2m}}{1-\rho^{2}}$, which is at most $\eps$ whenever
+$\rho^{2m}\le\frac{\eps(1-\rho^{2})}{1+A}$. Taking logarithms gives the stated threshold.
+For the estimate, use $\log\frac{1}{1-\rho^{2}}\le\frac{1}{1-\rho}$ (valid for
+$0\le\rho<1$, since $\log\frac1{1-\rho^2}\le\frac{\rho^2}{1-\rho^2}\le\frac1{1-\rho}$) and
+$-\log\rho\ge1-\rho$; then
+\[
+  m\le\frac{\log(1+A)+\log\frac1\eps+\log\frac{1}{1-\rho^{2}}}{2\log\frac1\rho}
+  \le\frac{\log(1/\eps)+\log(2+v)+\frac{1}{1-\rho}}{2(1-\rho)} .
+\]
+The leading term as $\eps\to0$ is $\frac{\log(1/\eps)}{2(1-\rho)}$, with the absolute
+constant $\frac12$.
+\end{proof}
+
+\subsection{The multivariate Jensen--Gurland inequality}
+Theorem \ref{thm:multi} with $n=2$ reproduces Theorem \ref{thm:main}. For a concrete
+three-point case take $0<\eps<\tfrac12$ and
+\[
+  x_{1}=x_{2}=v(1+\eps),\qquad x_{3}=v(1-2\eps),
+\]
+so that $\bar x=v$ and $m_{j}=v^{j}\eps^{j}\big(2+(-2)^{j}\big)$; \eqref{eq:multi} becomes
+\[
+  \log\frac{\Gamma\big(v(1+\eps)\big)^{2}\Gamma\big(v(1-2\eps)\big)}{\Gamma(v)^{3}}
+   =3v^{2}\eps^{2}\zeta(2,v)+2v^{3}\eps^{3}\zeta(3,v)
+    +\tfrac92v^{4}\eps^{4}\zeta(4,v)+O(\eps^{5}),
+\]
+all displayed coefficients being positive, in accordance with the multivariate
+Jensen--Gurland inequality of Theorem \ref{thm:multi}.

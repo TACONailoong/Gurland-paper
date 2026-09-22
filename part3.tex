@@ -1,0 +1,263 @@
+
+\section{Numerical verification}\label{sec:num}
+
+All computations were performed with \texttt{mpmath} at $35$--$60$ decimal digits by a
+single self-contained script \texttt{verify.py}, whose nine sections correspond to the
+numbered statements below and which reports \texttt{ok}/\texttt{FAIL} for each of the $50$
+checks (all pass). Table \ref{tab:exp} compares the exact expansion
+\eqref{eq:main2} with $\log\Gs$ computed from $\log\Gamma$; Table \ref{tab:rem} checks the
+two-sided estimate \eqref{eq:rembnd}, including the extreme case $(0.1,199.9)$ where
+$\rho=0.9891$; Table \ref{tab:brk} checks the bracket \eqref{eq:locbnd}; Table
+\ref{tab:cov} documents that the two sufficient conditions of Theorem \ref{thm:loc}(iv)
+cover the whole sampled parameter range; Table \ref{tab:inf} traces the approach of the
+ratio \eqref{eq:conj} to its sharp value $\frac23$, which is reached only in the joint
+limit $v\to\infty$, $\eps\to0$, $v\eps\to0$; and Table \ref{tab:em}
+records an independent Euler--Maclaurin certificate for the midpoint property.
+
+\begin{table}[htbp]\centering\small
+\caption{Exact expansion: $|\log\Gs-S_m|$ for the truncated series \eqref{eq:main2}, and
+the number $m$ of terms used.}
+\label{tab:exp}
+\begin{tabular}{rrrr}
+\toprule
+$x$ & $y$ & $|\log\Gs-S_{m}|$ & $m$\\
+\midrule
+$1$ & $2$ & $3.5\cdot10^{-51}$ & $34$\\
+$1$ & $10$ & $5.1\cdot10^{-48}$ & $142$\\
+$0.5$ & $3$ & $1.0\cdot10^{-49}$ & $68$\\
+$0.2$ & $0.9$ & $2.1\cdot10^{-51}$ & $37$\\
+$3$ & $3.0001$ & $1.0\cdot10^{-61}$ & $6$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{The two-sided estimate \eqref{eq:rembnd}: $\mathrm{lo}=\frac{u^{2m}}{m}\zeta(2m,1+v)$
+and $\mathrm{hi}$ is the right-hand side of \eqref{eq:rembnd}.}
+\label{tab:rem}
+\begin{tabular}{lrrrrr}
+\toprule
+$(x,y)$ & $\rho$ & $m$ & $R_m$ & lo & hi\\
+\midrule
+$(1,10)$ & $0.6923$ & $2$ & $4.1203\cdot10^{-1}$ & $3.1211\cdot10^{-1}$ & $6.9851\cdot10^{-1}$\\
+$(1,10)$ & $0.6923$ & $12$ & $2.2659\cdot10^{-5}$ & $1.2662\cdot10^{-5}$ & $3.0165\cdot10^{-5}$\\
+$(0.5,3)$ & $0.4545$ & $2$ & $3.6843\cdot10^{-2}$ & $3.2677\cdot10^{-2}$ & $5.1563\cdot10^{-2}$\\
+$(0.5,3)$ & $0.4545$ & $12$ & $6.2365\cdot10^{-10}$ & $5.0458\cdot10^{-10}$ & $7.1160\cdot10^{-10}$\\
+$(0.1,199.9)$ & $0.9891$ & $12$ & $2.9021$ & $0.3147$ & $15.9456$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{The bracket \eqref{eq:locbnd} of Theorem \ref{thm:loc}: $\delta=v-t$ against its
+lower bound $\mathrm{lo}$ and the two-term value
+$\mathrm{pre}=\frac{c^{2}\zeta(4,A)}{4\zeta(3,A)}$; the upper bound of \eqref{eq:locbnd} is
+never violated.}
+\label{tab:brk}
+\begin{tabular}{lrrrr}
+\toprule
+$(x,y)$ & $\rho$ & $\delta=v-t$ & lo & pre\\
+\midrule
+$(1,2)$ & $0.2000$ & $0.0199947$ & $0.0115425$ & $0.0197486$\\
+$(0.5,3)$ & $0.4545$ & $0.1186430$ & $0.0635181$ & $0.1108211$\\
+$(2,7)$ & $0.4545$ & $0.2194361$ & $0.1090893$ & $0.2063217$\\
+$(1,10)$ & $0.6923$ & $0.6573045$ & $0.2924374$ & $0.5586888$\\
+$(20,100)$ & $0.6557$ & $4.9818888$ & $2.2129255$ & $4.4074125$\\
+$(0.1,199.9)$ & $0.9891$ & $26.6699099$ & $8.2958322$ & $16.5501874$\\
+$(100,101)$ & $0.0049$ & $0.0004125$ & $0.0002068$ & $0.0004125$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{Coverage of Theorem \ref{thm:loc}(iv). The first family is the coarse
+$11$-point grid $\{10^{-3},10^{-2},10^{-1},\frac12,1,2,5,20,10^{2},10^{3},10^{4}\}^{2}$,
+whose $121$ points consist of $11$ diagonal pairs $x=y$ and $110$ off-diagonal pairs. On the
+diagonal $\rho=c/A=0$ and both halves of \eqref{eq:locbnd} degenerate, so only the $110$
+off-diagonal pairs are counted, and that is the number reported in the cases column. The
+other two families are $x=v(1+r)$, $y=v(1-r)$ with $r=j/400$, $j=1,\dots,399$. For those,
+$\rho(x,y)=\frac{vr}{1+v}$ runs over $(0,\frac{v}{1+v})$ in steps of
+$\frac{v}{400(1+v)}<\frac1{400}$, so the range of $\rho$ depends on $v$. A
+configuration may satisfy both conditions, so the (A) and (B) columns need not add up to
+the number of cases; in the coarse grid $22$ of the $110$ off-diagonal pairs satisfy both,
+and in every sample at least one of the two conditions holds, so the midpoint property is
+certified throughout.}
+\label{tab:cov}
+\begin{tabular}{lrrrr}
+\toprule
+sample & cases & (A) & (B) & neither\\
+\midrule
+coarse grid & $110$ & $42$ & $90$ & $0$\\
+$v=200$ & $399$ & $43$ & $396$ & $0$\\
+$v=5000$ & $399$ & $8$ & $399$ & $0$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{The ratio $\theta=\big(t-\sqrt{xy}\big)/\big(\frac{x+y}{2}-\sqrt{xy}\big)$ along
+$x=v(1+\eps)$, $y=v(1-\eps)$. For a \emph{fixed} $\eps$ it decreases to
+$\frac23+g(\eps)$ with $g(\eps)>0$ (numerically $g(\eps)\approx5.6\,\eps^{2}$, for
+instance $g(10^{-1})=5.60\cdot10^{-5}$), so the sharp value $\frac23$ is approached only in
+the joint limit $v\to\infty$, $\eps\to0$, $v\eps\to0$. The penultimate column is such a
+path ($\eps=v^{-2}$), and there $\theta=\frac23+\frac{1}{6v}+O(v^{-2})$, as the
+elementary computation in the remark after Theorem~\ref{conj:sharp} shows.}
+\label{tab:inf}
+\begin{tabular}{rrrrr}
+\toprule
+$v$ & $\eps=10^{-1}$ & $\eps=10^{-3}$ & $\eps=v^{-2}$ & limit\\
+\midrule
+$10^{2}$ & $0.668396737$ & $0.668333257$ & $0.668333250$ & $0.666666667$\\
+$10^{3}$ & $0.666890050$ & $0.666833339$ & $0.666833333$ & $0.666666667$\\
+$10^{4}$ & $0.666739371$ & $0.666683339$ & $0.666683333$ & $0.666666667$\\
+$10^{5}$ & $0.666724303$ & $0.666668339$ & $0.666668333$ & $0.666666667$\\
+$10^{6}$ & $0.666722796$ & $0.666666839$ & $0.666666833$ & $0.666666667$\\
+$10^{7}$ & $0.666722645$ & $0.666666689$ & $0.666666683$ & $0.666666667$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{Euler--Maclaurin certificate for the midpoint property, evaluated on the
+$110$ off-diagonal pairs of the coarse grid of Table \ref{tab:cov} (first three rows)
+and on four further pairs (last row). With
+$v=\frac{x+y}{2}$, $c=\frac{|x-y|}{2}$, $s=\sqrt{xy}$, $a=A=1+v$, write
+$G=K-L$, where $K(\xi)=\frac{1}{c^{2}}\log\frac{1}{1-c^{2}/\xi^{2}}$ and
+$L(\xi)=(\xi-w)^{-2}$ with $w=\frac{v-s}{2}$. The partial sum
+$E_r=\int_{a}^{\infty}G+\frac{G(a)}{2}-\sum_{j=1}^{r}\frac{B_{2j}}{(2j)!}G^{(2j-1)}(a)$
+approximates $\Sigma=\sum_{n\ge0}G(a+n)$, and the remainder obeys the classical
+bound $|R_r|\le\frac{2\zeta(2r)}{(2\pi)^{2r}}\int_{a}^{\infty}|G^{(2r)}|$,
+because the periodic Bernoulli polynomial $\tilde B_{2r}$ attains its extreme
+value $B_{2r}$ at the endpoints. Since $\Sigma<0$ is exactly the midpoint property (of
+which condition (B) of Theorem~\ref{thm:loc} is the sufficient criterion
+$\Sigma\le\mathcal{E}<0$), the table certifies the midpoint property for each sampled
+configuration directly, without passing through the midpoint and trapezoid estimates used
+there. The last row compares
+$E_r$ with $\Sigma$ computed independently, as the difference between the
+exact value of $\sum_{m\ge1}L(m+v)=\zeta\big(2,1+\frac{v+s}{2}\big)$ and a
+cancellation-free Euler--Maclaurin evaluation of $\sum_{m\ge1}K(m+v)$; it is
+evaluated for all six orders $r=1,\dots,6$, although only $r\le5$ certify negativity
+for every sampled configuration.}
+\label{tab:em}
+\begin{tabular}{llr}
+\toprule
+quantity & value & attained at\\
+\midrule
+worst $E_r+|R_r|$, $r=1,\dots,5$ & $-1.9844\cdot10^{-5}$ & $(1000,10000)$\\
+configurations with $E_r+|R_r|\ge0$ & $0$ of $110$ & ---\\
+largest $|E_r-\Sigma|/|R_r|$, $r=1,\dots,6$ & $0.72$ & $(0.01,10^{4})$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Several further checks are worth recording. First, for $(x,y)=(100,1)$ one has
+$Q(100,1)=4.5>1$, so Corollary~1 of \cite{Wisniewska25} does not apply, yet
+$\rho(100,1)=0.96117<1$ and the expansion \eqref{eq:main2} converges, with tails
+$R_{20}=1.478\cdot10^{-1}$, $R_{100}=4.359\cdot10^{-5}$ and
+$R_{1000}=5.117\cdot10^{-37}$. Second, the optimality statement in Theorem \ref{thm:rem}
+is confirmed: for $(x,y)=(2,7)$ one has $2\log\rho=-1.5769147$, while the computed values of
+$\frac1m\log R_m$ are $-1.8184$ ($m=5$), $-1.7829$ ($m=10$), $-1.7157$ ($m=20$),
+$-1.6635$ ($m=40$), $-1.6288$ ($m=80$) and $-1.6072$ ($m=160$), approaching the predicted
+limit monotonically. Third, the three-term expansion \eqref{eq:locasym} is confirmed: for
+$(x,y)=(10,11)$ one has $v-t=0.00378192138106$, while the two-term formula gives
+$0.00378011106367$ and the three-term formula $0.00378191965719$, the residual being
+$-1.7\cdot10^{-9}$. Fourth, the large-argument asymptotics of Theorem \ref{thm:asym}: for
+$(x,y)=(10^{6},2\cdot10^{6})$, where $v=1.5\cdot10^{6}$ and
+$\rho=\frac{|x-y|}{2+x+y}=0.333333\ldots$, one has $\log\Gs=169898.977904\ldots$ against the
+prediction $(1+v)\Lambda(\rho)=\frac{u^{2}}{1+v}H(\rho)=169898.919012\ldots$, a relative
+error of
+$3.5\cdot10^{-7}$, which decreases as the arguments grow ($2.7\cdot10^{-5}$ at
+$(10^{4},3\cdot10^{4})$). Fifth, Corollaries \ref{cor:gurland} and \ref{cor:beta} were
+verified on the sampled configurations; for instance $B(1,2)=\frac12$ lies between
+$0.457050$ and $0.622777$, and the three-point expansion displayed in
+Section \ref{sec:app} agrees with $\log\Gamma$ to $19$ digits.
+
+\section{Concluding remarks}
+
+Theorem \ref{thm:main} is the classical Hurwitz-zeta expansion \eqref{eq:classical} of
+$\log\Gamma$, specialized to the second-order symmetric difference that defines
+$\log\Gs$. In that specialization it identifies the mechanism behind the expansion of
+\cite{Wisniewska25}: the logarithm of Gurland's ratio is a Taylor remainder about the
+midpoint, and the poles of $\Gamma$ at the non-positive integers determine both the
+coefficients (Hurwitz zeta values) and the exact region of convergence, which is the entire
+quadrant. Two of the three problems posed in \cite{Wisniewska25} are thereby answered
+affirmatively, and the quantitative content of the third is the subject of
+Theorems \ref{thm:loc} and \ref{conj:sharp}. For the third we proved
+uniqueness of $t$, its expansion up to order $c^{4}$, an explicit two-sided bracket, the
+midpoint property $t>\frac12\big(\sqrt{xy}+\frac{x+y}{2}\big)$ under either of the two
+complementary conditions (A) and (B) of Theorem \ref{thm:loc}, and finally the sharp bound
+$\theta>\frac23$ of Theorem \ref{conj:sharp}, whose proof uses neither (A) nor (B) and shows
+the constant $\frac23$ to be optimal and not attained. Three directions seem worth
+pursuing:
+\begin{enumerate}
+\item[(a)] a proof of Conjecture \ref{conj:ab}, i.e.\ that conditions (A) and (B) cover
+  the whole quadrant; the sharp bound $\frac23$ itself is now Theorem \ref{conj:sharp},
+  whose proof uses neither (A) nor (B); the extremal configuration for the sharp constant is
+  $v\to\infty$ with $|x-y|/(x+y)\to0$, as recorded in the remark following
+  Theorem \ref{conj:sharp};
+\item[(b)] the $q$-analogue: replacing $\Gamma$ by the $q$-gamma function $\Gamma_{q}$,
+  for which the role of $\zeta(2k,\cdot)$ is played by the Jackson $q$-zeta values, and the
+  sign-regularity of the corresponding kernel;
+\item[(c)] quantitative versions of Theorem \ref{thm:multi}, such as remainder estimates
+  uniform in $n$ and a central limit theorem for the corresponding Jensen gaps.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Statements and declarations.} The author has no competing interests to
+declare. All numerical results reported in Section \ref{sec:num} were produced by the
+accompanying script \texttt{verify.py} and can be reproduced exactly with \texttt{mpmath}
+by running \texttt{python verify.py}.
+
+\begin{thebibliography}{99}
+\bibitem{Alzer01} H.~Alzer, \emph{Sharp inequalities for the beta function}, Indag. Math.
+(N.S.) \textbf{12} (2001), 15--21.
+\bibitem{ChenChoi17} C.-P.~Chen and J.~Choi, \emph{Completely monotonic functions related
+to Gurland's ratio for the gamma function}, Math. Inequal. Appl. \textbf{20} (2017),
+651--659.
+\bibitem{DLMF} NIST Digital Library of Mathematical Functions, Release 1.2.4,
+\url{https://dlmf.nist.gov/}, \S2.10 (Euler--Maclaurin formula), \S5.15 (polygamma
+functions), \S25.11 (Hurwitz zeta function).
+\bibitem{Gautschi74} W.~Gautschi, \emph{Some mean value inequalities for the gamma
+function}, SIAM J. Math. Anal. \textbf{5} (1974), 282--292.
+\bibitem{Gurland56} J.~Gurland, \emph{An inequality satisfied by the gamma function},
+Skand. Aktuarietidskr. (1956), 171--172.
+\bibitem{Kairies83} H.~Kairies, \emph{An inequality for Krull solutions of a certain
+difference equation}, in: General Inequalities 3 (Oberwolfach 1981), Internat.
+Schriftenreihe Numer. Math. \textbf{64}, Birkh\"auser, Basel, 1983, 277--280.
+\bibitem{LaforgiaNatalini13} A.~Laforgia and P.~Natalini, \emph{On some inequalities for
+the gamma function}, Adv. Dyn. Syst. Appl. \textbf{8} (2013), 261--267.
+\bibitem{Merkle05} M.~Merkle, \emph{Gurland's ratio for the gamma function},
+Comput. Math. Appl. \textbf{49} (2005), 389--406.
+\bibitem{Wisniewska25} H.~Wi\'sniewska, \emph{Some inequalities for Gurland's ratio of the
+gamma functions}, arXiv:2512.07028 [math.CA], 2025.
+\bibitem{Alzer97} H.~Alzer, \emph{On some inequalities for the gamma and psi functions},
+Math. Comp. \textbf{66} (1997), 373--389.
+\bibitem{Berndt85} B.~C.~Berndt, \emph{The gamma function and the Hurwitz zeta-function},
+Amer. Math. Monthly \textbf{92} (1985), DOI 10.1080/00029890.1985.11971552.
+\bibitem{Lin13} L.~Lin, \emph{Further refinements of Gurland's formula for $\pi$},
+J. Inequal. Appl. \textbf{2013} (2013), 2013:48.
+\bibitem{MoustafaMahmoud26} H.~Moustafa and M.~Mahmoud, \emph{New bounds for Gurland-type
+ratios in terms of the generalized Nielsen's beta function}, Gulf J. Math. \textbf{23}
+(2026), no.~2, 1--18, DOI 10.56947/x7dwnj62.
+\bibitem{Qi10} F.~Qi, \emph{Bounds for the ratio of two gamma functions},
+J. Inequal. Appl. \textbf{2010} (2010), Article ID 493058.
+\bibitem{Srivastava88} H.~M.~Srivastava, \emph{Sums of certain series of the Riemann zeta
+function}, J. Math. Anal. Appl. \textbf{134} (1988), no.~1, 129--140,
+DOI 10.1016/0022-247X(88)90013-3.
+\bibitem{SrivastavaChoi01} H.~M.~Srivastava and J.~Choi, \emph{Series Associated with the
+Zeta and Related Functions}, Kluwer Academic Publishers, Dordrecht, 2001.
+\bibitem{TianYang21} J.-F.~Tian and Z.-H.~Yang, \emph{Asymptotic expansions of Gurland's
+ratio and sharp bounds for their remainders}, J. Math. Anal. Appl. \textbf{493} (2021),
+124545.
+\bibitem{YangTian24} Z.-H.~Yang and J.-F.~Tian, \emph{Complete monotonicity of the remainder
+of an asymptotic expansion of the generalized Gurland's ratio}, Math. Inequal. Appl.
+\textbf{27} (2024), DOI 10.7153/mia-2024-27-18.
+\bibitem{YangZheng16} Z.-H.~Yang and S.-Z.~Zheng, \emph{Monotonicity of a mean related to
+polygamma functions with an application}, J. Inequal. Appl. \textbf{2016} (2016),
+Art.~216, DOI 10.1186/s13660-016-1155-4.
+\bibitem{YangZheng19} Z.-H.~Yang and S.-Z.~Zheng, \emph{Complete monotonicity and
+inequalities involving Gurland's ratios of gamma functions}, Math. Inequal. Appl.
+\textbf{22} (2019), no.~1, 97--109, DOI 10.7153/mia-2019-22-07.
+\end{thebibliography}
+
+\end{document}

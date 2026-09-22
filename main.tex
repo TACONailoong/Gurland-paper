@@ -1,0 +1,1389 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=2.6cm]{geometry}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Gg}{\mathcal{G}}
+\newcommand{\Gs}{\mathcal{G}_{\star}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator{\arsh}{artanh}
+
+\title[Sharp remainders and optimal localization for Gurland's ratio]{Sharp remainder
+estimates and optimal localization for Gurland's ratio of the gamma function}
+
+\author{}
+\date{\today}
+
+\subjclass[2020]{Primary 33B15; Secondary 11M35, 26D07, 41A58}
+\keywords{Gurland's ratio, gamma function, Hurwitz zeta function, Jensen gap,
+complete monotonicity, remainder estimates}
+
+\begin{document}
+
+\begin{abstract}
+Gurland's ratio $\Gg(x,y)=\Gamma(x)\Gamma(y)/\Gamma^{2}\big(\tfrac{x+y}{2}\big)$ is the
+exponential of the Jensen gap of $\log\Gamma$ at the pair $(x,y)$. We show that this gap
+admits an exact power-series expansion in powers of $\big(\tfrac{x-y}{2}\big)^{2}$ whose
+coefficients are Hurwitz zeta values --- a classical identity, recorded in this form by
+Srivastava --- and that the expansion converges \emph{for every} $x,y>0$: the natural
+radius of convergence is the distance from the midpoint
+$\tfrac{x+y}{2}$ to the pole of $\Gamma$ at the origin, so the region of convergence is
+exactly the open quadrant. This answers in the affirmative two open problems recently posed
+by Wi\'sniewska (arXiv:2512.07028) and shows that the sufficient condition $Q<1$ she imposed
+is redundant. We complement the expansion with two-sided remainder estimates whose
+geometric rate $\rho=|x-y|/(2+x+y)$ we prove optimal; we show that the previously used rate
+$Q$ satisfies $\rho\le Q$ with equality exactly when $x=y$, and that $Q$ is unbounded. We
+give the complete asymptotics of the ratio for large arguments in terms of the binary
+entropy function, extend the expansion to any number of variables, and derive applications
+to the beta function and to certified computation. Our main result localizes the
+mean-value parameter $t(x,y)$ of Wi\'sniewska; the two-sided endpoint bound that defines
+$t$ appears already in the work of Yang and Zheng. We determine the asymptotics of $t$ up
+to order $(x-y)^{4}$ and prove the sharp bound
+\[
+  \frac{t(x,y)-\sqrt{xy}}{\frac{x+y}{2}-\sqrt{xy}}\;>\;\frac{2}{3},
+\]
+the constant $\tfrac23$ being optimal and not attained. The proof is self-contained and
+uses neither of the two sufficient conditions (A) and (B) under which the weaker midpoint
+property $t>\tfrac12\big(\sqrt{xy}+\tfrac{x+y}{2}\big)$ had been established; we also
+record an independent, elementary route that yields the bound on an explicit range. We
+conjecture that conditions (A) and (B) cover the whole quadrant. All results are
+accompanied by high-precision numerical verification.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+\subsection{Background}
+For $x,y>0$ Gurland's ratio \cite{Gurland56} is
+\begin{equation}\label{eq:G}
+  \Gg(x,y)=\frac{\Gamma(x)\,\Gamma(y)}{\Gamma^{2}\big(\frac{x+y}{2}\big)},
+\end{equation}
+and Gurland's inequality states that $\Gg(x,y)>1$ for $x\ne y$. Since $\log\Gamma$ is
+strictly convex on $(0,\infty)$ (Bohr--Mollerup), $\log\Gg(x,y)$ is exactly the
+\emph{Jensen gap}
+\begin{equation}\label{eq:jensen}
+  \log\Gg(x,y)=\log\Gamma(x)+\log\Gamma(y)-2\log\Gamma\Big(\frac{x+y}{2}\Big)\;\ge\;0,
+\end{equation}
+so Gurland's ratio is the exponential of the second-order Jensen gap of $\log\Gamma$.
+Following \cite{Wisniewska25} we also consider the modified ratio
+\begin{equation}\label{eq:Gs}
+  \Gs(x,y)=\frac{\Gamma(1+x)\,\Gamma(1+y)}{\Gamma^{2}\big(1+\frac{x+y}{2}\big)}
+            =\frac{4xy}{(x+y)^{2}}\,\Gg(x,y).
+\end{equation}
+The ratio \eqref{eq:G} and its relatives were studied by Gautschi \cite{Gautschi74},
+Kairies \cite{Kairies83}, Merkle \cite{Merkle05}, Alzer \cite{Alzer01} and Chen--Choi
+\cite{ChenChoi17}; see \cite{LaforgiaNatalini13} for a survey.
+
+Writing
+\begin{equation}\label{eq:uv}
+  u:=\frac{x-y}{2},\qquad v:=\frac{x+y}{2},\qquad\text{so that }x=v+u,\quad y=v-u,
+\end{equation}
+Wi\'sniewska \cite[Thm.~1]{Wisniewska25}, starting from the Weierstrass product, proved the
+finite expansion
+\begin{equation}\label{eq:Wthm}
+  \log\Gs(x,y)=\sum_{k=1}^{m-1}\frac{1}{k}\Big(\frac{x-y}{2}\Big)^{2k}
+     \zeta\Big(2k,1+\frac{x+y}{2}\Big)+R^{m}_{n}(x,y),\qquad m\ge2,
+\end{equation}
+with the remainder estimate
+\begin{equation}\label{eq:Wrem}
+  0\le R^{m}_{n}(x,y)\le \eps^{m}_{n}(x,y)
+  =\frac1m\Big(\frac{x-y}{2}\Big)^{2m}\sum_{n=1}^{\infty}\frac{1}{(n+x)^{m}(n+y)^{m}},
+\end{equation}
+where $\zeta(s,a)=\sum_{n\ge0}(n+a)^{-s}$ is the Hurwitz zeta function. From
+\eqref{eq:Wthm}--\eqref{eq:Wrem} she deduced that the condition
+\begin{equation}\label{eq:Q}
+  Q(x,y):=\frac{|x-y|}{2\,(1+\sqrt{xy})}<1
+\end{equation}
+implies $\log\Gs(x,y)=S_{\infty}(x,y)$, where $S_\infty=\lim_{m\to\infty}S_m$ and $S_m$
+denotes the partial sum in \eqref{eq:Wthm} \cite[Cor.~1]{Wisniewska25}; the bilateral
+inequality
+\begin{equation}\label{eq:Wbil}
+  \Big(\frac{x-y}{2}\Big)^{2}\zeta\Big(2,1+\frac{x+y}{2}\Big)\le\log\Gs(x,y)
+  \le\Big(\frac{x-y}{2}\Big)^{2}\zeta\big(2,1+\sqrt{xy}\,\big)
+\end{equation}
+\cite[Cor.~2]{Wisniewska25}. The two-sided bound \eqref{eq:Wbil} is, however, not new.
+Indeed, with the base point $1$, $p=x$ and $q=y$, Corollary~11 and Remark~5 of Yang and
+Zheng \cite{YangZheng19} state that
+\begin{equation}\label{eq:YZ}
+  \exp\Big[\frac{(p-q)^{2}}{4}\psi'(1+r_{1})\Big]
+  \;\le\;\frac{\Gamma(1+p)\,\Gamma(1+q)}{\Gamma^{2}\big(1+\frac{p+q}{2}\big)}
+  \;\le\;\exp\Big[\frac{(p-q)^{2}}{4}\psi'(1+r_{2})\Big],
+\end{equation}
+with the best constants $r_{1}=\frac{p+q}{2}$ and $r_{2}=\sqrt{pq}$ whenever $p,q>0$; as
+$\psi'=\zeta(2,\cdot)$ and $\big(\frac{x-y}{2}\big)^{2}=u^{2}$, this is exactly
+\eqref{eq:Wbil}. Since $\zeta(2,\cdot)$ is continuous and strictly decreasing,
+\eqref{eq:Wbil} yields at once a unique parameter
+$t=t(x,y)\in\big(\sqrt{xy},\tfrac{x+y}{2}\big)$ with
+\begin{equation}\label{eq:Wt}
+  \log\Gs(x,y)=\Big(\frac{x-y}{2}\Big)^{2}\zeta(2,1+t)
+  \qquad\text{\cite[Cor.~3]{Wisniewska25}.}
+\end{equation}
+Thus Corollaries 2 and 3 of \cite{Wisniewska25} follow from \cite{YangZheng19}. The
+question that remains is quantitative --- \emph{where}, inside
+$\big(\sqrt{xy},\frac{x+y}{2}\big)$, the point $t$ lies --- and it is this question that
+Theorems \ref{thm:loc} and \ref{conj:sharp} answer.
+She then posed \cite[\S2]{Wisniewska25} three problems.
+
+\smallskip
+\noindent\textbf{Open problem 1.} Does $R^{m}_{n}(x,y)\to0$ hold for \emph{every} $x,y>0$?
+
+\noindent\textbf{Open problem 2.} Does $\log\Gs(x,y)=S_{\infty}(x,y)$ hold in general, and
+if not, how large can the difference be?
+
+\noindent\textbf{Open problem 3.} How is $t(x,y)$ located in the interval
+$\big(\sqrt{xy},\tfrac{x+y}{2}\big)$? What is its distance to the midpoint of that interval?
+\normalsize
+
+\subsection{Relation to the literature, and what is new here}
+The identity in Theorem \ref{thm:main} is a symmetrised Taylor expansion and is
+\emph{classical}. Since $\psi^{(n)}(z)=(-1)^{n+1}n!\,\zeta(n+1,z)$ for
+$\operatorname{Re}z>0$ \cite[\S5.15]{DLMF}, the Taylor series of $\log\Gamma$ about $a>0$ is
+\[
+  \log\Gamma(a+w)=\log\Gamma(a)+\sum_{n\ge1}\frac{(-1)^{n}}{n}\zeta(n,a)\,w^{n},
+  \qquad |w|<a ,
+\]
+whose even part is exactly \eqref{eq:main1}; equivalently,
+\begin{equation}\label{eq:classical}
+  \log\Gamma(a+w)+\log\Gamma(a-w)-2\log\Gamma(a)
+   =\sum_{k\ge1}\frac{\zeta(2k,a)}{k}\,w^{2k},\qquad |w|<a ,
+\end{equation}
+and it is in this form, as a sum of a series of Hurwitz zeta values, that the identity is
+recorded in the literature (see, e.g., \cite{Srivastava88}) and in monographs on zeta
+series \cite{SrivastavaChoi01}; the classical relation between the gamma function and the
+Hurwitz zeta function goes back at least to \cite{Berndt85}. We therefore claim no novelty
+for \eqref{eq:classical}, nor for its specialization $a=1+v$, $w=u$, which is
+\eqref{eq:main2}. What is new here is
+(i) the \emph{sharp remainder theory} of the resulting convergent expansion: the two-sided
+estimate \eqref{eq:rembnd} with the \emph{optimal} geometric rate $\rho$, together with the
+comparison with the previously used rate $Q$; (ii) the explicit observation that this
+specialization makes Wi\'sniewska's expansion \eqref{eq:Wthm} converge on the whole
+quadrant and her hypothesis $Q<1$ redundant, which settles Open Problems 1 and 2 of
+\cite{Wisniewska25}; (iii) the quantitative localization theory of the trigamma mean $t$:
+the bracket \eqref{eq:locbnd}, the expansion \eqref{eq:locasym} as $c\to0$, and the sharp
+global bound $\theta>\frac23$ of Theorem \ref{conj:sharp}, whose best constant $\frac23$ is
+not a corollary of the estimates of Theorem \ref{thm:loc} but follows from a separate
+global argument in four steps; (iv) the large-argument asymptotics of
+Theorem \ref{thm:asym}; (v) the multivariate extension of Theorem \ref{thm:multi}; and
+(vi) the applications of Section \ref{sec:app}.
+
+Gurland's ratio has also been studied intensively by asymptotic methods. Merkle
+\cite{Merkle05} derived bounds and asymptotic expansions; Alzer \cite{Alzer97} and Qi
+\cite{Qi10} gave further bounds and a survey; Tian and Yang \cite{TianYang21} established
+the asymptotic expansion
+\[
+  \frac{\Gamma(x+p)\,\Gamma(x+q)}{\Gamma\big(x+\frac{p+q}{2}\big)^{2}}
+   =\exp\Big[\sum_{k=1}^{n}\frac{B_{2k}(s)-B_{2k}\big(\frac12\big)}
+   {k(2k-1)\,(x+r_{0})^{2k-1}}+R_{n}(x;p,q)\Big],\qquad x\to\infty ,
+\]
+where $p,q\in\R$, $w=|p-q|\ne0$, $s=\frac{1-w}{2}$, $r_{0}=\frac{p+q-1}{2}$ and $B_{2k}$
+are the Bernoulli polynomials, and proved that $(-1)^{n}R_{n}$ is completely monotone when
+$w<1$, which yields sharp bounds; the remainder was analysed further by Yang and Tian
+\cite{YangTian24} for the generalized ratio
+$\frac{\Gamma(x+a)\Gamma(x+b)}{\Gamma(x+c)\Gamma(x+d)}$ with $a+b=c+d$. These expansions
+are \emph{asymptotic in $1/x$} with Bernoulli-polynomial coefficients, whereas
+\eqref{eq:main1}--\eqref{eq:main2} are \emph{exact and convergent} in powers of
+$\big(\frac{x-y}{2}\big)^{2}$ with Hurwitz-zeta coefficients. The two descriptions are
+complementary: the former is adapted to large arguments, the latter to arguments that are
+close together, and only the latter can be summed to the exact value. Refinements of
+Gurland's formula for $\pi$ were given by Lin \cite{Lin13}.
+
+Two further strands of the literature are close to the localization problem studied here.
+Yang and Zheng \cite{YangZheng19} gave necessary and sufficient conditions for four classes
+of ratios of gamma functions to be logarithmically completely monotonic; their
+Corollary~11 and Remark~5 yield the two-sided bound \eqref{eq:YZ}, and their
+Propositions~3 and~4 compare double integrals of $\psi^{(n)}$ over rectangles, which is the
+same weighted-average picture that underlies \eqref{eq:locbnd}. In \cite{YangZheng16} the
+mean $\psi_{n}^{-1}\big(\frac{1}{b-a}\int_{a}^{b}\psi_{n}(x+t)\,dt\big)-x$, generated by a
+\emph{uniform} average of a polygamma function, is shown to increase from $\min(a,b)$ onto
+$\frac{a+b}{2}$; the parameter $t$ of \eqref{eq:Wt} is the corresponding mean for a
+\emph{triangular} average of $\psi'$ (see Remark \ref{rem:equiv}), so the two objects are of
+the same type but not the same, and neither the existence of an interior sharp constant nor
+its value follows from \cite{YangZheng16}. Very recently, Moustafa and Mahmoud
+\cite{MoustafaMahmoud26} obtained bounds for Gurland-type ratios in terms of the generalized
+Nielsen beta function. The sharp remainder theory of \eqref{eq:main1} and the quantitative
+localization theory developed below do not appear in these works.
+
+\subsection{Results of the present paper}
+Our starting point is that \eqref{eq:jensen} is a second-order symmetric difference of
+$\log\Gamma$, so the subject is governed by the Taylor expansion of $\log\Gamma$ about the
+midpoint $v$. Since the singularities of $\log\Gamma$ nearest to $v>0$ are the poles of
+$\Gamma$ at $0,-1,-2,\dots$, the Taylor series about $v$ converges on the disc $|z-v|<v$,
+and $x=v+u$, $y=v-u$ both lie in that disc precisely when $|u|<v$, i.e.\ precisely when
+$x,y>0$. Thus the expansion converges on the whole quadrant and no additional hypothesis is
+required.
+
+\begin{theorem}[Exact expansion]\label{thm:main}
+For all $x,y>0$,
+\begin{align}
+  \log\Gg(x,y)&=\sum_{k=1}^{\infty}\frac{1}{k}\Big(\frac{x-y}{2}\Big)^{2k}
+      \zeta\Big(2k,\frac{x+y}{2}\Big),\label{eq:main1}\\[1mm]
+  \log\Gs(x,y)&=\sum_{k=1}^{\infty}\frac{1}{k}\Big(\frac{x-y}{2}\Big)^{2k}
+      \zeta\Big(2k,1+\frac{x+y}{2}\Big).\label{eq:main2}
+\end{align}
+Both series converge absolutely. Moreover \eqref{eq:main1} converges for exactly those
+$(x,y)\in\R^{2}$ with $|x-y|<x+y$, and \eqref{eq:main2} for exactly those with
+$|x-y|<2+x+y$; on the quadrant $x,y>0$ both hold identically, and the two regions are
+optimal.
+\end{theorem}
+
+\begin{corollary}\label{cor:open12}
+For every $x,y>0$ and every $m\ge1$,
+\begin{align*}
+  R^{m}_{n}(x,y)&=\log\Gs(x,y)-\sum_{k=1}^{m-1}\frac{1}{k}\Big(\frac{x-y}{2}\Big)^{2k}
+     \zeta\Big(2k,1+\frac{x+y}{2}\Big)\\
+  &=\sum_{k=m}^{\infty}\frac{1}{k}\Big(\frac{x-y}{2}\Big)^{2k}
+     \zeta\Big(2k,1+\frac{x+y}{2}\Big)\;\ge\;0 .
+\end{align*}
+Consequently $R^{m}_{n}(x,y)\downarrow0$ and $\log\Gs(x,y)=S_{\infty}(x,y)$ for
+\emph{every} $x,y>0$: Open Problems 1 and 2 both have affirmative answers. In particular
+the hypothesis $Q(x,y)<1$ in \cite[Cor.~1]{Wisniewska25} is redundant.
+\end{corollary}
+
+The next result quantifies the convergence; the relevant rate is not \eqref{eq:Q} but
+\begin{equation}\label{eq:rho}
+  \rho(x,y):=\frac{|x-y|}{2+x+y}\quad(\Gs),\qquad
+  \rho_{\Gg}(x,y):=\frac{|x-y|}{x+y}\quad(\Gg).
+\end{equation}
+
+\begin{theorem}[Sharp remainder estimates]\label{thm:rem}
+Let $x,y>0$, $m\ge1$, $u=\tfrac{x-y}{2}$, $v=\tfrac{x+y}{2}$,
+$\rho=\rho(x,y)=|x-y|/(2+x+y)$ and
+$R_m:=\log\Gs(x,y)-\sum_{k=1}^{m-1}\frac{u^{2k}}{k}\zeta(2k,1+v)$. Then
+\begin{equation}\label{eq:rembnd}
+  \frac{u^{2m}}{m}\,\zeta(2m,1+v)\;\le\;R_m\;\le\;
+  \frac{\rho^{2m}}{m\,(1-\rho^{2})}\Big(1+\frac{1+v}{2m-1}\Big).
+\end{equation}
+Moreover, if $x\ne y$, then $\lim_{m\to\infty}\frac{1}{m}\log R_m=2\log\rho$, so the rate
+$\rho$ in \eqref{eq:rembnd} is optimal. The same holds for $\Gg$ with $\rho$ replaced by
+$\rho_{\Gg}=|x-y|/(x+y)$ and $\zeta(2m,1+v)$ by $\zeta(2m,v)$.
+\end{theorem}
+
+\begin{proposition}\label{prop:compare}
+For all $x,y>0$ one has $\rho(x,y)\le Q(x,y)$, with equality iff $x=y$. Moreover
+$\rho(x,y)<1$ for all $x,y>0$, whereas $\sup_{x,y>0}Q(x,y)=+\infty$; for instance
+$Q(x,1)=\frac{x-1}{2(1+\sqrt x)}\sim\frac{\sqrt x}{2}$ as $x\to\infty$. Hence $\{Q<1\}$ is a
+proper subset of the quadrant, and Corollary~1 of \cite{Wisniewska25} does not cover the
+whole range of validity of the expansion.
+\end{proposition}
+
+\begin{corollary}\label{cor:bil}
+For all $x,y>0$ and all $m\ge1$,
+\[
+  S_m(x,y)\;\le\;\log\Gs(x,y)\;\le\;S_m(x,y)+
+  \frac{\rho^{2m}}{m(1-\rho^{2})}\Big(1+\frac{1+v}{2m-1}\Big),
+\]
+where $S_m(x,y)=\sum_{k=1}^{m-1}\frac{1}{k}\big(\frac{x-y}{2}\big)^{2k}\zeta(2k,1+v)$.
+Taking $m=2$ improves the upper bound of \eqref{eq:Wbil} whenever
+$\rho<\frac{\sqrt5}{3}$, while $S_m$ increases to $\log\Gs(x,y)$ as $m\to\infty$.
+\end{corollary}
+
+We also determine the behaviour of the ratio at large arguments. Recall
+\begin{equation}\label{eq:Lambda}
+  \Lambda(\rho):=(1+\rho)\log(1+\rho)+(1-\rho)\log(1-\rho),\qquad |\rho|<1 .
+\end{equation}
+One has $\Lambda(\rho)=\sum_{k\ge1}\rho^{2k}/\big(k(2k-1)\big)$, $\Lambda(\rho)>0$ for
+$\rho\ne0$, and $\Lambda(\rho)=2\rho\arsh\rho+\log(1-\rho^{2})$. As $\Lambda$ vanishes to
+second order at the origin it is convenient to divide it by $\rho^{2}$: we set
+\begin{equation}\label{eq:H}
+  H(\rho):=\frac{\Lambda(\rho)}{\rho^{2}}
+   =\sum_{k\ge1}\frac{\rho^{2k-2}}{k(2k-1)}\quad(0<\rho<1),
+  \qquad H(0):=1 .
+\end{equation}
+The series converges for $|\rho|<1$, so $H$ is continuous, strictly increasing and
+$\ge1$ on $[0,1)$, and $\Lambda(\rho)=\rho^{2}H(\rho)$ there.
+
+\begin{theorem}[Large-argument asymptotics]\label{thm:asym}
+Let $x_{j},y_{j}>0$, $v_{j}=\tfrac{x_j+y_j}{2}\to\infty$, $u_{j}=\tfrac{x_j-y_j}{2}$, and
+put $\rho_{j}:=\frac{|u_{j}|}{1+v_{j}}$. Suppose
+\[
+  \rho_{j}\;\longrightarrow\;\rho_{0}\in[0,1).
+\]
+Then, with $H$ as in \eqref{eq:H},
+\[
+  \log\Gs(x_{j},y_{j})
+   =\frac{u_{j}^{2}}{1+v_{j}}\,H(\rho_{j})\big(1+o(1)\big)
+   =(1+v_{j})\,\Lambda(\rho_{j})\big(1+o(1)\big)
+  \qquad (j\to\infty),
+\]
+and the analogous statement holds for $\log\Gg$ with $1+v_j$ replaced by $v_j$
+throughout, i.e.\ under the hypothesis $|u_j|/v_j\to\rho_0\in[0,1)$ one has
+$\log\Gg=\frac{u_j^{2}}{v_j}H\big(\frac{|u_j|}{v_j}\big)(1+o(1))$. (The sign of $u_j$ is
+immaterial, since $\Lambda$ and $H$ are even.)
+\end{theorem}
+
+The expansion extends verbatim to any number of variables.
+
+\begin{theorem}[Multivariate expansion]\label{thm:multi}
+Let $n\ge2$, $x_{1},\dots,x_{n}>0$, $\bar x=\frac1n\sum_{i=1}^{n}x_{i}$ and
+$m_{j}=\sum_{i=1}^{n}(x_{i}-\bar x)^{j}$ for $j\ge2$. If
+$\max_{i}|x_{i}-\bar x|<\bar x$, then
+\begin{equation}\label{eq:multi}
+  \log\frac{\prod_{i=1}^{n}\Gamma(x_{i})}{\Gamma(\bar x)^{n}}
+   =\sum_{j=2}^{\infty}\frac{(-1)^{j}}{j}\,\zeta(j,\bar x)\,m_{j},
+\end{equation}
+the series converging absolutely. In particular
+$\prod_{i=1}^{n}\Gamma(x_{i})\ge\Gamma(\bar x)^{n}$, with equality iff $x_{1}=\dots=x_{n}$.
+\end{theorem}
+
+Finally we address Open Problem 3. We first note that $t$ is uniquely determined, then we
+control its distance to the midpoint by two independent arguments, and we determine the
+sharp constant in the resulting bound.
+
+\begin{theorem}[Localization of $t$]\label{thm:loc}
+Let $x\ne y$ be positive, $v=\tfrac{x+y}{2}$, $s=\sqrt{xy}$, $c=\tfrac{|x-y|}{2}$,
+$A=1+v$ and $\rho=c/A$. Then:
+\begin{enumerate}
+\item[\rm(i)] there is a unique $t=t(x,y)\in(s,v)$ satisfying \eqref{eq:Wt};
+\item[\rm(ii)] with $\rho=\rho(x,y)$ one has
+  \begin{equation}\label{eq:locbnd}
+    \frac{c^{2}\,\zeta(4,A)}{4\,\zeta(3,A)+6v\,\zeta(4,A)}
+    \;\le\; v-t \;\le\;
+    \frac{c^{2}\,\zeta(4,A)}{4\,\zeta(3,A)}\Big(1+\frac{2\rho^{2}}{3(1-\rho^{2})}\Big);
+  \end{equation}
+\item[\rm(iii)] as $c\to0^{+}$ with $v$ fixed,
+  \begin{equation}\label{eq:locasym}
+    v-t=\frac{c^{2}\zeta(4,A)}{4\zeta(3,A)}
+     +\frac{c^{4}}{2\zeta(3,A)}\Big[\frac{\zeta(6,A)}{3}
+       -\frac{3\,\zeta(4,A)^{3}}{16\,\zeta(3,A)^{2}}\Big]+O(c^{6});
+  \end{equation}
+\item[\rm(iv)] $t>\frac{1}{2}\big(\sqrt{xy}+\frac{x+y}{2}\big)$ whenever at least one of
+  the following two conditions holds:
+  \begin{align}
+    &\text{(A)}\qquad \frac{v+s}{2(1+v)}\Big(1+\frac{2\rho^{2}}{3(1-\rho^{2})}\Big)<1,
+      \label{eq:condA}\\[1mm]
+    &\text{(B)}\qquad \mathcal{E}(x,y):=
+      \int_{v+\frac12}^{\infty}\!\!K-\frac{1}{A-w}-\frac{1}{2(A-w)^{2}}\;<\;0,
+      \label{eq:condB}
+  \end{align}
+  where $w=\frac{v-s}{2}$ and $K(\xi)=\frac{1}{c^{2}}\log\frac{1}{1-c^{2}/\xi^{2}}$
+  for $\xi>c$.
+\end{enumerate}
+\end{theorem}
+
+Condition (A) is a Hurwitz-zeta comparison; condition (B) is a convexity bound, and
+$\int_{B}^{\infty}K$ has the closed form
+\begin{equation}\label{eq:intK}
+  \int_{B}^{\infty}K=\frac{1}{c^{2}}\Big[-B\log\frac{B^{2}}{B^{2}-c^{2}}
+     +c\log\frac{B+c}{B-c}\Big],\qquad B>c .
+\end{equation}
+The two conditions are complementary --- (A) is effective for moderate $\rho$, (B) as
+$\rho\to1$ --- and numerically their union covers the whole parameter range
+(Section \ref{sec:num}). This leads us to sharpen the second half of Open Problem 3.
+
+\begin{theorem}\label{conj:sharp}
+For all $x\ne y>0$,
+\begin{equation}\label{eq:conj}
+  \frac{t(x,y)-\sqrt{xy}}{\frac{x+y}{2}-\sqrt{xy}}\;>\;\frac{2}{3},
+\end{equation}
+equivalently $t(x,y)>\frac13\big(x+y+\sqrt{xy}\big)$. The constant $\frac23$ is best
+possible and the bound is not attained: the ratio in \eqref{eq:conj} tends to $\frac23$
+along $v\to\infty$, $|x-y|/(x+y)\to0$.
+\end{theorem}
+
+\begin{proof}
+Fix $v>0$, let $0<c<v$, $s=\sqrt{v^{2}-c^{2}}$, $A=1+v$, $\Delta=\frac{v-s}{3}$ and
+$\Phi(c)=\log\Gs(x,y)/c^{2}=\sum_{k\ge1}\frac{c^{2k-2}}{k}\zeta(2k,A)$. Since
+$\zeta(2,1+t)=\Phi(c)$ and $\zeta(2,\cdot)$ is strictly decreasing,
+\[
+  \theta>\tfrac23\iff t>\tfrac{2v+s}{3}=v-\Delta
+  \iff\zeta(2,A-\Delta)>\Phi(c)\iff R(c)>0 ,
+\]
+and $R(0)=0$ by continuity. We prove $R'(c)>0$ on $(0,v)$. Because
+$\Delta'=\frac{c}{3s}$ and $\partial_{\Delta}\zeta(2,A-\Delta)=2\zeta(3,A-\Delta)$,
+\begin{equation}\label{eq:Rp}
+  R'(c)=\frac{2c}{3s}\zeta(3,A-\Delta)-\frac{2}{c}E(c),\qquad
+  E(c)=\sum_{m\ge1}\frac{m}{m+1}c^{2m}\zeta(2m+2,A),
+\end{equation}
+so it suffices to prove
+\begin{equation}\label{eq:target}
+  E(c)<\frac{c^{2}}{3s}\zeta(3,A-\Delta).
+\end{equation}
+
+\emph{Step 1 (a global midpoint bound for $E$).} Put
+$K_c(u)=\frac{1}{c^{2}}\log\frac{1}{1-c^{2}/u^{2}}$ and
+$Q_c(u)=\frac{1}{u^{2}-c^{2}}-K_c(u)$. From
+$K_c(u)=\sum_{j\ge0}\frac{c^{2j}}{j+1}u^{-2j-2}$ and
+$\frac{1}{u^{2}-c^{2}}=\sum_{j\ge0}c^{2j}u^{-2j-2}$,
+\[
+  Q_c(u)=\sum_{m\ge1}\frac{m}{m+1}c^{2m}u^{-2m-2}>0,\qquad E(c)=\sum_{n\ge0}Q_c(A+n).
+\]
+All coefficients being positive, $Q_c$ is positive, decreasing and convex on $u>c$; the
+midpoint rule for a convex function, summed over $n\ge0$, gives with $B=A-\frac12>c$
+\begin{equation}\label{eq:mid}
+  E(c)<\int_{B}^{\infty}Q_c(u)\,du ,
+\end{equation}
+with no restriction on the size of $c^{2}/A$. Term-by-term integration with
+$y=c^{2}/B^{2}\in(0,1)$ gives
+\begin{equation}\label{eq:F}
+  \int_{B}^{\infty}Q_c(u)\,du=\frac{c^{2}}{6B^{3}}F(y),\qquad
+  F(y)=6\sum_{m\ge1}\frac{m}{(m+1)(2m+1)}y^{m-1}.
+\end{equation}
+
+\emph{Step 2 (a sharp one-variable inequality).} Let
+$S(y)=\sum_{m\ge0}\frac{y^{m}}{(m+1)(2m+1)}$, so $F=6S'$, and let
+$h(y)=\frac{1-\sqrt{1-y}}{2+\sqrt{1-y}}$, for which a direct differentiation gives
+$6h'(y)=\frac{9}{\sqrt{1-y}\,(2+\sqrt{1-y})^{2}}$. The identity
+$h=\frac{3(1-\sqrt{1-y})-y}{3+y}$, together with
+$1-\sqrt{1-y}=\sum_{m\ge1}c_my^{m}$,
+$c_m=\frac{\binom{2m}{m}}{4^{m}(2m-1)}$, $\frac{c_m}{c_{m-1}}=\frac{2m-3}{2m}$, shows
+that $h=\sum_{m\ge1}a_my^{m}$ with $a_1=\frac16$ and
+$a_m=c_m-\frac13a_{m-1}$ for $m\ge2$. Writing $S=1+\sum_{m\ge1}b_my^{m}$,
+$b_m=\frac{1}{(m+1)(2m+1)}$, we have $a_1=b_1=\frac16$ and, for $r_m=a_m/c_m$,
+$r_m=1-\frac{2m}{3(2m-3)}r_{m-1}$ with $r_2=\frac59$, $r_3=\frac{17}{27}$; a two-line
+induction gives $\frac{3(m-1)}{4m}\le r_m<\frac34$ for every $m\ge2$. Hence
+$a_2-b_2=\frac{1}{360}$, $a_3-b_3=\frac{11}{3024}$, and for $m\ge4$
+$a_m>c_m-\frac14c_{m-1}=\frac{3(m-2)}{2(2m-3)}c_m$, while
+$Q_m:=\frac{3(m-2)c_m}{2(2m-3)b_m}$ satisfies $Q_4=\frac{135}{128}>1$ and
+$\frac{Q_{m+1}}{Q_m}=\frac{(m-1)(m+2)(2m-3)(2m+3)}{2(m-2)(m+1)^{2}(2m+1)}>1$ because
+$2m^{3}-5m^{2}+5m+22>0$. Thus $a_m>b_m$ for all $m\ge2$, so $h'>S'$ and
+\begin{equation}\label{eq:sharp1}
+  F(y)<\frac{9}{\sqrt{1-y}\,(2+\sqrt{1-y})^{2}},\qquad 0<y<1 .
+\end{equation}
+
+\emph{Step 3 (the finite-$v$ correction only helps).} Let $z=A-\Delta$,
+$e=\frac{1}{2B}\in(0,1)$ and $q=\frac{s}{B}$, so that
+$q=\sqrt{(1-e)^{2}-y}$ and, exactly, $z=\frac{B(2+q+4e)}{3}$. A direct computation gives
+\[
+  \frac{B^{3}(z+1)}{sz^{3}}=L_e(y):=\frac{9\,(2+q+10e)}{q\,(2+q+4e)^{3}},
+\]
+and $L_0(y)$ is precisely the right-hand side of \eqref{eq:sharp1}. Since
+$q'(e)=-\frac{1-e}{q}$,
+\[
+  \frac{d}{de}\log L_e=-\frac{N(e,q)}{q^{2}(2+q+4e)(2+q+10e)},
+\]
+where
+$N(e,q)=40e^{3}+40e^{2}q-12e^{2}+83eq^{2}-32eq-24e+2q^{3}+q^{2}-8q-4$. For fixed
+$e\in(0,1)$ the function $q\mapsto N(e,q)$ is strictly convex
+($\partial_{q}^{2}N=166e+12q+2>0$), and on $0<q<1-e$ its endpoint values are
+$N(e,0)=4(e-1)(2e+1)(5e+1)<0$ and
+$N(e,1-e)=9(e-1)(9e^{2}-2e+1)<0$. A convex function lies below the maximum of its
+endpoint values, so $N(e,q)<0$ on $0<q<1-e$; hence $e\mapsto L_e(y)$ is strictly
+increasing and
+\begin{equation}\label{eq:sharp2}
+  \frac{9}{\sqrt{1-y}\,(2+\sqrt{1-y})^{2}}<L_e(y)=\frac{B^{3}(z+1)}{sz^{3}} .
+\end{equation}
+
+\emph{Step 4 (conclusion).} Combining \eqref{eq:mid}--\eqref{eq:sharp2},
+\[
+  E(c)<\frac{c^{2}}{6B^{3}}F(y)<\frac{c^{2}}{6B^{3}}\cdot\frac{B^{3}(z+1)}{sz^{3}}
+        =\frac{c^{2}(z+1)}{6sz^{3}} .
+\]
+Finally, the trapezoid rule applied to the convex decreasing function
+$t\mapsto(z+t)^{-3}$ gives
+$\zeta(3,z)\ge\int_{0}^{\infty}(z+t)^{-3}dt+\frac{1}{2z^{3}}=\frac{z+1}{2z^{3}}$, so
+$E(c)<\frac{c^{2}}{3s}\zeta(3,z)$, which is \eqref{eq:target}. Therefore $R'(c)>0$ on
+$(0,v)$; with $R(0)=0$ this gives $R(c)>0$, and by \eqref{eq:Rp} and the first display
+$\theta>\frac23$, as claimed. \qed
+\end{proof}
+
+\begin{conjecture}\label{conj:ab}
+Conditions (A) and (B) of Theorem \ref{thm:loc} are satisfied for every $x\ne y>0$.
+\end{conjecture}
+
+\begin{theorem}[An explicit certified range]\label{thm:partial}
+Let $x\ne y>0$ satisfy
+\begin{equation}\label{eq:partialcond}
+  (x-y)^{2}\;\le\;\frac{2+x+y}{3},
+\end{equation}
+equivalently $c^{2}\le\frac A6$, where $c=\frac{|x-y|}{2}$ and $A=1+v$. Then
+$\theta(x,y)>\frac23$. In particular, for every fixed $d\ne0$ inequality \eqref{eq:conj}
+holds for all $x,y>0$ with $|x-y|=d$ and $x+y$ sufficiently large: this is precisely the
+range in which the constant $\frac23$ is sharp.
+\end{theorem}
+
+\begin{remark}[A product formula]\label{rem:product}
+The Weierstrass product for $\Gamma$ gives a representation of $\Gs$ that makes the
+identity $\Phi=\sum_{m\ge0}K(A+m)$ transparent. Indeed
+$\Gamma(z)=\frac{e^{-\gamma z}}{z}\prod_{n\ge1}\frac{e^{z/n}}{1+z/n}$ yields, with
+$v=\frac{x+y}{2}$ and $c=\frac{|x-y|}{2}$,
+\[
+  \frac{\Gamma(v+c)\Gamma(v-c)}{\Gamma(v)^{2}}
+   =\frac{v^{2}}{v^{2}-c^{2}}\prod_{n\ge1}\frac{(n+v)^{2}}{(n+v)^{2}-c^{2}} ,
+\]
+the factors $e^{\pm z/n}$ cancelling. Since
+$\Gs(x,y)=\frac{4xy}{(x+y)^{2}}\Gg(x,y)=\frac{v^{2}-c^{2}}{v^{2}}\cdot
+ \frac{\Gamma(v+c)\Gamma(v-c)}{\Gamma(v)^{2}}$, the factors $v^{2}-c^{2}$ cancel as well
+and
+\begin{equation}\label{eq:product}
+  \Gs(x,y)=\prod_{n\ge1}\frac{(n+v)^{2}}{(n+v)^{2}-c^{2}}
+          =\prod_{m\ge0}\frac{(A+m)^{2}}{(A+m)^{2}-c^{2}} ,
+\end{equation}
+Taking logarithms, and writing $A=1+v$, recovers $\log\Gs=\sum_{m\ge0}\log\big(1-\frac{c^{2}}{(A+m)^{2}}\big)^{-1}
+=c^{2}\sum_{m\ge0}K(A+m)=\sum_{k\ge1}\frac{c^{2k}}{k}\zeta(2k,A)$, i.e.\
+Theorem~\ref{thm:main} for $\Gs$; each factor of \eqref{eq:product} is positive because
+$c<v<A$. In particular $\Gs$ is a product of terms $>1$, which is the Jensen--Gurland
+inequality in multiplicative form. The individual summand in $R(c)$ is positive once
+$u>\frac{c^{2}+\Delta^{2}}{2\Delta}$: from $-\log(1-y)\le\frac{y}{1-y}$ with
+$y=\frac{c^{2}}{u^{2}}$ it is enough that $u^{2}-c^{2}>(u-\Delta)^{2}$, i.e.\
+$u>\frac{c^{2}+\Delta^{2}}{2\Delta}$. So only the
+$\max\big\{0,\lfloor\frac{c^{2}+\Delta^{2}}{2\Delta}-A\rfloor+1\big\}$ smallest indices can be
+exceptional, and
+numerically their total deficit is exceeded by the total surplus of the others by a factor
+that falls to $1.0016$ at $v=10^{4}$, $c=0.1v$. This is the quantitative reason why
+estimates coarser than about $10^{-3}$ relative accuracy cannot decide
+Theorem~\ref{conj:sharp}.
+\end{remark}
+
+\begin{remark}[A monotone formulation]\label{rem:monotone}
+Theorem \ref{conj:sharp} would also follow from the combination of the following two
+statements about the
+single quantity $\Theta(c):=\dfrac{v-t(c)}{v-s(c)}$, $0<c<v$, where $t(c)$ is the point
+with $\zeta(2,1+t)=\log\Gs/c^{2}$ and $s=\sqrt{v^{2}-c^{2}}$:
+\begin{itemize}
+\item[(m1)] $\Theta$ is strictly decreasing on $(0,v)$;
+\item[(m2)] $\lim_{c\to0^{+}}\Theta(c)\le\frac13$.
+\end{itemize}
+Indeed (m1) and (m2) give $\Theta(c)<\frac13$ for every $c>0$, which is
+$v-t<\frac{v-s}{3}$, i.e.\ $\theta>\frac23$. Statement (m2) is a local computation: as
+$c\to0$ one has $v-t\sim\frac{c^{2}\zeta(4,A)}{4\zeta(3,A)}$ by \eqref{eq:locasym} and
+$v-s\sim\frac{c^{2}}{2v}$, so
+\[
+  \lim_{c\to0^{+}}\Theta(c)=\frac{v\,\zeta(4,A)}{2\,\zeta(3,A)}
+   =\frac13\Big(1-\frac{1}{2A}+O(A^{-2})\Big)\qquad(A\to\infty),
+\]
+and this limit is $<\frac13$ for every $A>1$: by \eqref{eq:ratio},
+$\frac{\zeta(4,A)}{\zeta(3,A)}\le\frac{2A^{3}}{3(A-\frac12)^{3}(A+1)}$, so
+$\lim_{c\to0^{+}}\Theta(c)<\frac13$ is equivalent to $(A-1)A^{3}<(A-\frac12)^{3}(A+1)$,
+i.e.\ to $4A^{3}-6A^{2}+5A-1>0$, which holds for $A\ge1$. Statement
+(m1) is what remains: numerically it holds for every tested $v$ ($1.5$, $2$, $5$, $20$,
+$100$, $10^{3}$, $10^{4}$), $\Theta$ decreasing from $\frac13-\frac{1}{6A}$ at $c\to0$ to
+values as low as $0.183$ at $c\to v$ for $v=\frac32$. Equivalently, by
+$\zeta(2,A-\delta)=\Phi$ and $\delta'=E/(c\,\zeta(3,A-\delta))>0$, while
+$\Delta'=c/(3s)$, so (m1) reads
+\begin{equation}\label{eq:monotone}
+  \delta(c)\,c^{2}\,\zeta(3,A-\delta(c))\;>\;s(c)\,(v-s(c))\,E(c),
+  \qquad E(c)=\sum_{m\ge1}\frac{m}{m+1}c^{2m}\zeta(2m+2,A).
+\end{equation}
+\end{remark}
+
+\begin{remark}[A wider certified range]\label{rem:wider}
+The proof of Theorem \ref{thm:partial} can be repeated with a sharper split of the
+logarithm. Since $-\log(1-y)=y+\frac{y^{2}}{2}+\sum_{k\ge3}\frac{y^{k}}{k}
+\le y+\frac{y^{2}}{2}+\frac{y^{3}}{3(1-y)}$ for $0<y<1$, and since
+$(u-\Delta)^{2}\le u^{2}$, one has
+\[
+  c^{2}R(c)\;\ge\;c^{2}\big[2\Delta\zeta(3,A)-\Delta^{2}\zeta(4,A)\big]
+   -\frac{c^{4}\zeta(4,A)}{2(1-\rho^{2})} ,
+\]
+so $R(c)>0$ certainly holds as soon as
+\begin{equation}\label{eq:wider}
+  2\Delta\,\zeta(3,A)\;>\;\Delta^{2}\zeta(4,A)+\frac{c^{2}\zeta(4,A)}{2(1-\rho^{2})},
+  \qquad \Delta=\frac{v-s}{3},\ \rho=\frac{c}{A}.
+\end{equation}
+Condition \eqref{eq:wider} is strictly weaker than the hypothesis of
+Theorem \ref{thm:partial}: it holds throughout
+$c^{2}\lesssim0.62\,A$ (numerically $c^{2}/A=0.8145$, $0.6661$, $0.6297$, $0.6216$,
+$0.6208$ for $v=5,20,100,1000,10^{4}$), whereas $c^{2}\le\frac A6\approx0.167A$ was
+all that the earlier estimates gave. Beyond $c^{2}\approx0.62A$ the right-hand side of
+\eqref{eq:wider} overtakes the left and this particular chain stops discriminating.
+\end{remark}
+
+\begin{remark}[Scaling limit]\label{rem:scaling}
+Fix $\rho=\frac{c}{A}$ and let $A\to\infty$. Since $\zeta(2m+2,A)\sim\frac{A^{-(2m+1)}}{2m+1}$
+and $v-s=A(1-\sqrt{1-\rho^{2}})(1+o(1))$, the comparison $\zeta(2,A-\Delta)>\Phi$ behind
+Theorem \ref{conj:sharp} becomes, at leading order in $A^{-1}$,
+\begin{equation}\label{eq:scaling}
+  \frac{t}{1-t}\;>\;\Sigma_{0}(\rho)-1,
+  \qquad t=\frac{1-\sqrt{1-\rho^{2}}}{3},
+  \qquad \Sigma_{0}(\rho)=\sum_{m\ge0}\frac{\rho^{2m}}{(m+1)(2m+1)} ,
+\end{equation}
+and $\Sigma_{0}$ has the closed form
+$\Sigma_{0}(\rho)=2\frac{\arsh\rho}{\rho}+\frac{\log(1-\rho^{2})}{\rho^{2}}$. The difference
+of the two sides of \eqref{eq:scaling},
+$D(\rho)=\frac{t}{1-t}-\Sigma_{0}(\rho)+1$, is positive on $(0,1)$, and this is again a
+consequence of Step 2 of the proof of Theorem \ref{conj:sharp}. Indeed, with $y=\rho^{2}$,
+\[
+  \frac{t}{1-t}=\frac{1-\sqrt{1-y}}{2+\sqrt{1-y}}=h(y),
+  \qquad \Sigma_{0}(\rho)=S(y),
+  \qquad\text{so } D=h-S+1 .
+\]
+Step 2 writes $h=\sum_{m\ge1}a_{m}y^{m}$ and $S=1+\sum_{m\ge1}b_{m}y^{m}$ with
+$a_{1}=b_{1}=\frac16$ and $a_{m}>b_{m}$ for every $m\ge2$; hence
+$D=\sum_{m\ge2}(a_{m}-b_{m})y^{m}$ has positive coefficients, which proves $D>0$ and at the
+same time identifies the expansion
+$D(\rho)=\frac{\rho^{4}}{360}+\frac{11\rho^{6}}{3024}+O(\rho^{8})$, since $a_2-b_2=\frac1{360}$
+and $a_3-b_3=\frac{11}{3024}$ are the coefficients computed there (with a positive
+$O(\rho^{8})$ tail). Numerically $D(\rho)\approx\rho^{4}/360$ down to $\rho=5\cdot10^{-4}$
+(where $D=1.74\cdot10^{-16}$) and $D(0.99)=5.10\cdot10^{-2}$. Thus the constant $\frac23$ is
+decided by an $O(\rho^{4})$ cancellation: this is why no first-order estimate settles
+Theorem \ref{conj:sharp}.
+\end{remark}
+
+\begin{remark}\label{rem:equiv}
+Theorem \ref{conj:sharp} can be restated as a comparison of $\zeta(2,\cdot)$ with its
+own triangular average. With $A=1+v$, $c=|x-y|/2$, $K$ as in \eqref{eq:intK} and
+$\Phi=\log\Gs(x,y)/c^{2}$, the identity
+$\sum_{n\ge0}K(A+n)=\Phi$ of the proof of Theorem \ref{thm:loc}(iv) combines with
+$\psi(A+t)-\psi(A-t)=\int_{-t}^{t}\psi'(A+z)\,dz$ to give
+\[
+  \Phi=\frac{1}{c^{2}}\int_{0}^{c}\big[\psi(A+t)-\psi(A-t)\big]dt
+     =\int_{-c}^{c}\psi'(A+z)\,\frac{c-|z|}{c^{2}}\,dz .
+\]
+Since $\zeta(2,1+t)=\psi'(1+t)$, the inequality of Theorem \ref{conj:sharp} is therefore
+equivalent to
+\[
+  \int_{-c}^{c}\Big[\psi'\!\big(A-\Delta\big)-\psi'(A+z)\Big]\frac{c-|z|}{c^{2}}\,dz>0,
+  \qquad \Delta=\frac{v-s}{3}=\frac{c^{2}}{3(v+s)},
+\]
+where $s=\sqrt{xy}$: it compares the value of $\psi'=\zeta(2,\cdot)$ at the point
+$A-\Delta$ with its average over $[-c,c]$ against the triangular weight $(c-|z|)/c^{2}$,
+whose variance is $c^{2}/6$. Expanding both sides about $A$, the terms of order $c^{0}$ and
+$c^{1}$ cancel (the weight is even), and the first surviving comparison is
+\[
+  \frac{\zeta(4,A)}{\zeta(3,A)}<\frac{4}{3(v+s)} ,
+\]
+which holds for all $x,y>0$, with relative margin $\frac{1}{A}$ because
+$\zeta(4,A)/\zeta(3,A)=\frac{2}{3A}\big(1+O(A^{-1})\big)$ and $s\le v$. The inequality is
+delicate because the decision rests on the next terms, of relative size $\rho^{2}$: this is
+also why the constant $\frac23$ is sharp but not attained.
+\end{remark}
+
+\begin{remark}
+The limiting statement in Theorem \ref{conj:sharp} follows from Theorem
+\ref{thm:loc}(iii). Take $x_{j}=v_{j}(1+\eps_{j})$, $y_{j}=v_{j}(1-\eps_{j})$ with
+$v_{j}\to\infty$, $\eps_{j}\to0$ and $v_{j}\eps_{j}\to0$. Then $c_{j}=v_{j}\eps_{j}\to0$,
+so \eqref{eq:locasym} applies and, since $\zeta(4,A)/\zeta(3,A)\sim2/(3A)$ as
+$A\to\infty$,
+\[
+  v_{j}-t_{j}\sim\frac{v_{j}^{2}\eps_{j}^{2}}{4}\cdot\frac{2}{3(1+v_{j})}
+  \sim\frac{v_{j}\eps_{j}^{2}}{6},
+  \qquad
+  v_{j}-s_{j}=\frac{v_{j}\eps_{j}^{2}}{1+\sqrt{1-\eps_{j}^{2}}}\sim\frac{v_{j}\eps_{j}^{2}}{2}.
+\]
+Hence $(v_{j}-t_{j})/(v_{j}-s_{j})\to\frac13$ and $(t_{j}-s_{j})/(v_{j}-s_{j})\to\frac23$. Thus
+$\theta=\frac23+\frac{1}{6v}+O(v^{-2})$; the penultimate column of Table \ref{tab:inf} is
+such a path and confirms this to nine significant digits. It also shows that a fixed
+$\eps$ does \emph{not} suffice: there $\theta\to\frac23+g(\eps)>\frac23$.
+\end{remark}
+
+\section{Proofs}
+
+\subsection{Proof of Theorem \ref{thm:main}}
+Let $v>0$ and put $\Omega=\{z\in\mathbb{C}:\operatorname{Re}z>0\}$. The principal branch of
+$\log\Gamma$ is holomorphic on $\Omega$, and the disc $D(v,v)=\{z:|z-v|<v\}$ is contained in
+$\Omega$. The nearest singularities of $\log\Gamma$ to $v$ are the poles of $\Gamma$ at
+$0,-1,-2,\dots$, all at distance $\ge v$ from $v$, and $|0-v|=v$; hence the Taylor series of
+$\log\Gamma$ about $v$ has radius of convergence exactly $v$ and converges to $\log\Gamma$
+on $D(v,v)$.
+
+Fix $u$ with $|u|<v$. Then $v\pm u\in D(v,v)$ and
+\[
+  \log\Gamma(v+w)=\log\Gamma(v)+\sum_{n=1}^{\infty}\frac{\psi^{(n-1)}(v)}{n!}\,w^{n},
+  \qquad |w|<v ,
+\]
+where $\psi=\Gamma'/\Gamma$ and $\psi^{(n)}$ are the polygamma functions. Evaluating at
+$w=u$ and $w=-u$ and adding,
+\[
+  \log\Gamma(v+u)+\log\Gamma(v-u)-2\log\Gamma(v)
+   =2\sum_{k=1}^{\infty}\frac{\psi^{(2k-1)}(v)}{(2k)!}\,u^{2k}.
+\]
+The relation $\psi^{(n)}(z)=(-1)^{n+1}n!\,\zeta(n+1,z)$ for $\operatorname{Re}z>0$
+(see e.g.\ \cite[\S5.15]{DLMF}) gives, for $n=2k-1$,
+$\psi^{(2k-1)}(v)=(2k-1)!\,\zeta(2k,v)$. Therefore
+\[
+  \log\Gg(x,y)=2\sum_{k=1}^{\infty}\frac{(2k-1)!}{(2k)!}\,\zeta(2k,v)\,u^{2k}
+   =\sum_{k=1}^{\infty}\frac{u^{2k}}{k}\,\zeta(2k,v),
+\]
+which is \eqref{eq:main1}; its region of convergence is $|u|<v$, i.e.\
+$\{|x-y|<x+y\}$, and since all terms are non-negative the convergence is absolute. The
+same argument applied to $z\mapsto\log\Gamma(1+z)$ at the point $1+v$, whose singularities
+are $\{-1,-2,-3,\dots\}$ and hence lie at distance $\ge1+v$ from $1+v$, with equality at
+$-1$, yields \eqref{eq:main2} with convergence exactly for $|u|<1+v$, i.e.\ for
+$|x-y|<2+x+y$. Finally, $|x-y|<x+y$ and $|x-y|<2+x+y$ both hold for all $x,y>0$; the first
+fails for $(x,y)=(1,-\tfrac12)$ and the second for $(x,y)=(3,-2)$, so the stated regions are
+optimal. \qed
+
+\subsection{Proof of Corollary \ref{cor:open12}}
+By Theorem \ref{thm:main}, for every $x,y>0$ the series \eqref{eq:main2} converges and all
+its terms are positive. Hence
+$R^{m}_{n}(x,y)=\sum_{k=m}^{\infty}\frac{u^{2k}}{k}\zeta(2k,1+v)$
+is the tail of a convergent series of positive terms; it is positive and decreases to $0$.
+This is precisely Open Problems 1 and 2. The final claim is Proposition
+\ref{prop:compare}. \qed
+
+\subsection{Proof of Theorem \ref{thm:rem}}
+Put $A=1+v$, $c=|u|$, $\rho=c/A\in(0,1)$. We use the integral-test estimate
+\begin{equation}\label{eq:zetabnd}
+  \zeta(2k,A)\;\le\;A^{-2k}\Big(1+\frac{A}{2k-1}\Big),\qquad k\ge1,\ A>0,
+\end{equation}
+obtained from
+$\zeta(2k,A)=\sum_{n\ge0}(n+A)^{-2k}\le A^{-2k}+\int_{0}^{\infty}(t+A)^{-2k}dt$.
+
+\emph{Lower bound.} All terms of the tail are positive, so
+$R_m\ge\frac{u^{2m}}{m}\zeta(2m,A)$.
+
+\emph{Upper bound.} By \eqref{eq:zetabnd},
+\[
+  R_m\le\sum_{k=m}^{\infty}\frac{c^{2k}}{k}A^{-2k}\Big(1+\frac{A}{2k-1}\Big)
+   \le\Big(1+\frac{A}{2m-1}\Big)\sum_{k=m}^{\infty}\frac{\rho^{2k}}{k}
+   =\Big(1+\frac{A}{2m-1}\Big)\rho^{2m}\sum_{j=0}^{\infty}\frac{\rho^{2j}}{m+j},
+\]
+and $\sum_{j\ge0}\frac{\rho^{2j}}{m+j}\le\frac{1}{m(1-\rho^{2})}$, which is
+\eqref{eq:rembnd} for $\Gs$.
+
+\emph{Optimality.} Let $x\ne y$, so $c>0$ and $\rho\in(0,1)$. Write
+$\zeta(2m,A)=A^{-2m}(1+\eps_m)$; since
+$\sum_{n\ge1}\big(\frac{A}{n+A}\big)^{2m}\le\int_0^{\infty}\big(\frac{A}{A+t}\big)^{2m}dt
+=\frac{A}{2m-1}$, we have $0\le\eps_m\le\frac{A}{2m-1}\to0$. Hence
+$R_m\ge\frac{c^{2m}}{m}\zeta(2m,A)=\frac{1+\eps_m}{m}\rho^{2m}$, so
+$\frac1m\log R_m\ge2\log\rho+o(1)$; conversely \eqref{eq:rembnd} gives
+$\frac1m\log R_m\le2\log\rho+\frac1m\log\frac{1+\frac{A}{2m-1}}{m(1-\rho^{2})}
+=2\log\rho+o(1)$. The proof for $\Gg$ is identical with $A$ replaced by $v$; there
+$\zeta(2k,v)\le v^{-2k}(1+\frac{v}{2k-1})$ and $\rho_{\Gg}=c/v$. \qed
+
+\subsection{Proof of Proposition \ref{prop:compare}}
+Since $x+y\ge2\sqrt{xy}$, $\rho=\frac{|x-y|}{2+x+y}\le\frac{|x-y|}{2+2\sqrt{xy}}=Q$, with
+equality iff $x=y$. Also $|x-y|<x+y<2+x+y$, so $\rho<1$. Finally
+$Q(x,1)=\frac{x-1}{2(1+\sqrt x)}\sim\frac{\sqrt x}{2}\to\infty$. \qed
+
+\subsection{Proof of Corollary \ref{cor:bil}}
+The two-sided inequality is Theorem \ref{thm:rem} restated, and
+$S_{m}\to\log\Gs(x,y)$ as $m\to\infty$ by Corollary \ref{cor:open12}. It remains to
+compare, at $m=2$, the correction in \eqref{eq:rembnd} with the gain over the upper
+bound of \eqref{eq:Wbil}. Write $s=\sqrt{xy}$, $c=|u|$ and $A=1+v$, so that
+$\rho=c/A$ and
+\[
+  c^{2}\big[\zeta(2,1+s)-\zeta(2,1+v)\big]
+  =2c^{2}\int_{1+s}^{1+v}\zeta(3,z)\,dz
+  \;\ge\;2c^{2}\int_{1+s}^{1+v}\frac{dz}{2z^{2}}
+  =\frac{c^{2}(v-s)}{(1+s)(1+v)},
+\]
+because $\zeta(3,z)=\sum_{n\ge0}(n+z)^{-3}\ge\int_{0}^{\infty}(t+z)^{-3}dt=\frac{1}{2z^{2}}$
+(the integrand decreases, so $\int_{n}^{n+1}(t+z)^{-3}dt\le(n+z)^{-3}$ for every $n\ge0$).
+Since $v-s=\frac{v^{2}-s^{2}}{v+s}=\frac{c^{2}}{v+s}$ and $(v+s)(1+s)\le2v(1+v)$, the gain
+is at least $\frac{c^{4}}{2v(1+v)^{2}}$. The correction in \eqref{eq:rembnd} at $m=2$ is
+\[
+  \frac{\rho^{4}}{2(1-\rho^{2})}\Big(1+\frac{A}{3}\Big)
+  =\frac{c^{4}(A+3)}{6A^{4}(1-\rho^{2})},
+\]
+which is smaller as soon as $\frac{v(A+3)}{3A^{2}(1-\rho^{2})}<1$. As
+$\frac{v(A+3)}{3A^{2}}=\frac{v(v+4)}{3(v+1)^{2}}\le\frac49$, with equality at $v=2$, this
+holds whenever $\rho<\frac{\sqrt5}{3}$. \qed
+
+\subsection{Proof of Theorem \ref{thm:partial}}
+Fix $v>0$ and let $c\in[0,v)$ vary, with $s=s(c)=\sqrt{v^{2}-c^{2}}$, $A=1+v$ and
+$\Phi(c)=\log\Gs(x,y)/c^{2}$ for the pair $x=v+c$, $y=v-c$. Put
+\[
+  R(c):=\zeta\big(2,A-\Delta(c)\big)-\Phi(c),\qquad \Delta(c)=\frac{c^{2}}{3(v+s)}=\frac{v-s}{3}.
+\]
+Since $z\mapsto\zeta(2,z)$ is strictly decreasing and $\zeta(2,1+t)=\Phi(c)$, while
+$\frac{2v+s}{3}=A-\Delta$, we have
+\begin{equation}\label{eq:Rred}
+  \theta>\tfrac23\iff t>\frac{2v+s}{3}\iff\zeta\big(2,A-\Delta\big)>\Phi\iff R(c)>0 .
+\end{equation}
+By Theorem \ref{thm:main}, $\Phi(c)=\sum_{k\ge1}\frac{c^{2k-2}}{k}\zeta(2k,A)$ is a power
+series in $c^{2}$ whose radius of convergence is $A>v$; hence $R$ is differentiable on
+$(0,v)$ and $R(0)=0$. It therefore suffices to prove $R'(c)>0$ for $0<c<v$. Using
+$\Delta'=\frac{c}{3s}$ and $\partial_{\Delta}\zeta(2,A-\Delta)=2\zeta(3,A-\Delta)$,
+\[
+  R'(c)=2\zeta\big(3,A-\Delta(c)\big)\,\Delta'(c)-\Phi'(c)
+        =\frac{2c\,\zeta(3,A-\Delta(c))}{3s}-\frac{2}{c}E(c),
+\]
+where $E(c):=\sum_{m\ge1}\frac{m}{m+1}c^{2m}\zeta(2m+2,A)$.
+Since $n+A\ge A$, we have $\zeta(2m+2,A)\le A^{-(2m-2)}\zeta(4,A)$ for $m\ge1$, so with
+$\rho=c/A$,
+\[
+  E(c)\;\le\;c^{2}\zeta_{4}\sum_{m\ge1}\frac{m}{m+1}\rho^{2m-2}
+  \;\le\;c^{2}\zeta_{4}\Big(\frac12+\frac{\rho^{2}}{1-\rho^{2}}\Big)
+  \;=\;\frac{c^{2}\zeta_{4}(1+\rho^{2})}{2(1-\rho^{2})} .
+\]
+Moreover $\zeta(3,A-\Delta)>\zeta(3,A)$, and the trapezoid and midpoint rules applied to
+the convex decreasing functions $t\mapsto(t+A)^{-3}$ and $t\mapsto(t+A)^{-4}$ give
+\[
+  \zeta(3,A)\;\ge\;\int_{0}^{\infty}\!\!\frac{dt}{(t+A)^{3}}+\frac{1}{2A^{3}}
+   =\frac{A+1}{2A^{3}},\qquad
+  \zeta(4,A)\;\le\;\int_{-1/2}^{\infty}\!\!\frac{dt}{(t+A)^{4}}
+   =\frac{1}{3(A-\frac12)^{3}} ,
+\]
+whence
+\begin{equation}\label{eq:ratio}
+  \frac{\zeta(4,A)}{\zeta(3,A)}\;\le\;\frac{2A^{3}}{3(A-\frac12)^{3}(A+1)} .
+\end{equation}
+Inserting these two estimates, $R'(c)>0$ holds as soon as
+$\frac1s>\frac{A^{3}(1+\rho^{2})}{(A-\frac12)^{3}(A+1)(1-\rho^{2})}$, and since $s\le v=A-1$
+it is enough that $\Psi(A)\,\frac{1+\rho^{2}}{1-\rho^{2}}<1$, where
+$\Psi(A)=\frac{(A-1)A^{3}}{(A-\frac12)^{3}(A+1)}$. The elementary inequality
+\begin{equation}\label{eq:Psibnd}
+  \Psi(A)\;\le\;1-\frac{1}{3A}\qquad(A>1)
+\end{equation}
+holds: the difference between the two sides equals
+$\frac{4A^{4}-14A^{3}+21A^{2}-8A+1}{3A(A+1)(2A-1)^{3}}$, and substituting $t=A-1>0$ its
+numerator becomes $4t^{4}+2t^{3}+3t^{2}+8t+4>0$, all coefficients being positive. Consequently $R'(c)>0$ whenever
+$\rho^{2}<\frac{1}{6A-1}$, that is for all $c$ with $c^{2}<\frac{A^{2}}{6A-1}$; as
+$\frac{A^{2}}{6A-1}>\frac A6$, this covers every $c$ with $c^{2}\le\frac A6$, which is
+\eqref{eq:partialcond}. Hence $R>0$ on $(0,c]$ and, by \eqref{eq:Rred}, $\theta>\frac23$.
+\qed
+
+\subsection{Proof of Theorem \ref{thm:asym}}
+If $c_{j}=0$, i.e.\ $x_{j}=y_{j}$ for some $j$, then $\log\Gs(x_{j},y_{j})=0$ and the
+assertion is trivial, so we may assume $c_{j}>0$. Put $A_{j}=1+v_{j}$, $c_{j}=|u_{j}|$,
+$\rho_{j}=c_{j}/A_{j}\in(0,1)$, so $\rho_{j}\to\rho_{0}$ and
+$\Phi_{j}:=\frac{\log\Gs(x_{j},y_{j})}{c_{j}^{2}}
+=\sum_{k\ge1}\frac{c_{j}^{2k-2}}{k}\zeta(2k,A_{j})$. Set
+$h_{k}(A):=\frac{A^{2k-1}}{k}\zeta(2k,A)$, so that
+$A_{j}\Phi_{j}=\sum_{k\ge1}\rho_{j}^{2k-2}h_{k}(A_{j})$. Since
+$\frac{A^{2k-1}}{(n+A)^{2k}}=\frac1A\big(\frac{A}{n+A}\big)^{2k}$ and
+$t\mapsto\big(\frac{A}{A+t}\big)^{2k}$ is decreasing, the integral test gives, for all
+$k\ge1$ and $A>0$,
+\begin{equation}\label{eq:EM}
+  0\;\le\;h_{k}(A)\;=\;\frac{1}{kA}\sum_{n\ge0}\Big(\frac{A}{n+A}\Big)^{2k}
+  \;\le\;\frac{1}{kA}\Big(1+\int_{0}^{\infty}\Big(\frac{A}{A+t}\Big)^{2k}dt\Big)
+  \;=\;\frac{1}{kA}+\frac{1}{k(2k-1)} .
+\end{equation}
+Hence, for any $\rho_{1}$ with $\rho_{0}<\rho_{1}<1$ and all large $j$,
+\[
+  \rho_{j}^{2k-2}h_{k}(A_{j})\;\le\;\rho_{1}^{2k-2}\Big(\frac{1}{k}+\frac{1}{k(2k-1)}\Big)
+  \qquad(k\ge1),
+\]
+and the dominating series converges, so dominated convergence applies. On the other hand,
+for each fixed $k$ the Riemann sum $\frac1A\sum_{n\ge0}\big(\frac{A}{n+A}\big)^{2k}$
+converges to $\int_{0}^{\infty}(1+t)^{-2k}dt=\frac{1}{2k-1}$ as $A\to\infty$, so
+$h_{k}(A)\to\frac{1}{k(2k-1)}$. Therefore, by the definition \eqref{eq:H} of $H$,
+\[
+  A_{j}\Phi_{j}\;\longrightarrow\;\sum_{k\ge1}\frac{\rho_{0}^{2k-2}}{k(2k-1)}
+   =H(\rho_{0}),
+\]
+the case $\rho_{0}=0$ being the definition $H(0)=1$, and the case $\rho_{0}>0$ following
+from the identity $\sum_{k\ge1}z^{k-1}/\big(k(2k-1)\big)=\Lambda(\sqrt z)/z$ for $0<z<1$,
+which is obtained by integrating $\sum_{k\ge1}z^{k-1}/(2k-1)=\arsh\sqrt z/\sqrt z$ term by
+term. Since $c_{j}=A_{j}\rho_{j}$, the identity $\log\Gs=c_{j}^{2}\Phi_{j}$ reads
+$\log\Gs=\rho_{j}^{2}A_{j}\cdot A_{j}\Phi_{j}$; as $H$ is continuous at $\rho_{0}$,
+\[
+  \log\Gs(x_{j},y_{j})
+   =\frac{u_{j}^{2}}{1+v_{j}}\,H(\rho_{j})\big(1+o(1)\big)
+   =(1+v_{j})\,\Lambda(\rho_{j})\big(1+o(1)\big),
+\]
+the second equality being $\Lambda(\rho)=\rho^{2}H(\rho)$. The proof for $\Gg$ is the same
+with $A_{j}$ replaced by $v_{j}$ and $\rho_{j}$ by $|u_{j}|/v_{j}$, and gives
+$\log\Gg=\frac{u_{j}^{2}}{v_{j}}H\big(\frac{|u_{j}|}{v_{j}}\big)(1+o(1))$. \qed
+
+\subsection{Proof of Theorem \ref{thm:multi}}
+Each $x_{i}$ satisfies $|x_{i}-\bar x|<\bar x$, so $x_{i}$ lies in the disc
+$D(\bar x,\bar x)\subset\{\operatorname{Re}z>0\}$ on which $\log\Gamma$ is holomorphic with
+radius of convergence exactly $\bar x$. Hence
+\[
+  \log\Gamma(x_{i})=\log\Gamma(\bar x)+\sum_{m\ge1}\frac{\psi^{(m-1)}(\bar x)}{m!}
+   (x_{i}-\bar x)^{m}
+\]
+converges for every $i$. Summing over $i$ and using $\sum_{i}(x_{i}-\bar x)=0$,
+\[
+  \sum_{i=1}^{n}\log\Gamma(x_{i})-n\log\Gamma(\bar x)
+  =\sum_{m\ge2}\frac{\psi^{(m-1)}(\bar x)}{m!}\,m_{m}
+  =\sum_{m\ge2}\frac{(-1)^{m}}{m}\zeta(m,\bar x)\,m_{m},
+\]
+which is \eqref{eq:multi}; absolute convergence follows from
+$|m_{m}|\le n\max_{i}|x_{i}-\bar x|^{m}$ and $|x_{i}-\bar x|<\bar x$. The inequality is
+Jensen's inequality for the convex function $\log\Gamma$, with equality only when all
+$x_{i}$ coincide. \qed
+
+\subsection{Proof of Theorem \ref{thm:loc}}
+
+\emph{(i) Uniqueness.} The function $g(z)=\zeta(2,1+z)$ is continuous and strictly decreasing
+on $(0,\infty)$. By \eqref{eq:Wbil} and the positivity of the terms of \eqref{eq:main2},
+\[
+  \Big(\frac{x-y}{2}\Big)^{2}\zeta(2,1+v)\le\log\Gs(x,y)\le
+  \Big(\frac{x-y}{2}\Big)^{2}\zeta(2,1+s),
+\]
+so $\Phi:=\log\Gs(x,y)/c^{2}$ satisfies $g(v)\le\Phi\le g(s)$, both inequalities being
+strict for $x\ne y$. Hence exactly one $t\in(s,v)$ satisfies $g(t)=\Phi$.
+
+\emph{(ii) The bracket.} Write $\delta=v-t\in(0,v-s)$ and $A=1+v$. From \eqref{eq:main2},
+\begin{equation}\label{eq:keyid}
+  \Phi=\zeta(2,A)+\frac{c^{2}}{2}\zeta(4,A)+T',\qquad
+   T':=\sum_{k\ge3}\frac{c^{2k-2}}{k}\zeta(2k,A)\ge0 .
+\end{equation}
+Taylor expansion of $z\mapsto\zeta(2,z)$ about $A$, all of whose terms are positive, gives
+\begin{equation}\label{eq:taylor}
+  \zeta(2,A-\delta)=\zeta(2,A)+2\delta\zeta(3,A)+3\delta^{2}\zeta(4,A)+S',
+  \qquad S':=\sum_{j\ge3}(j+1)\delta^{j}\zeta(j+2,A)\ge0 .
+\end{equation}
+Since $\zeta(2,A-\delta)=\Phi$, subtraction yields
+\begin{equation}\label{eq:balance}
+  2\delta\zeta(3,A)+3\delta^{2}\zeta(4,A)+S'=\frac{c^{2}}{2}\zeta(4,A)+T' .
+\end{equation}
+For the lower bound write $\zeta_{j}:=\zeta(j,A)$ and put
+\begin{equation}\label{eq:d0}
+  \delta_{0}:=\frac{c^{2}\zeta_{4}}{4\zeta_{3}+6v\zeta_{4}} .
+\end{equation}
+We prove $\Phi>\zeta(2,A-\delta_{0})$, which by strict decrease of $z\mapsto\zeta(2,z)$
+gives $\delta>\delta_{0}$, i.e.\ the lower bound in \eqref{eq:locbnd}. By \eqref{eq:keyid}
+we have $\Phi\ge\zeta_{2}+\frac{c^{2}}{2}\zeta_{4}$ (as $T'\ge0$), while by
+\eqref{eq:taylor},
+$\zeta(2,A-\delta_{0})=\zeta_{2}+2\delta_{0}\zeta_{3}+3\delta_{0}^{2}\zeta_{4}+S'_{0}$
+with $S'_{0}:=\sum_{j\ge3}(j+1)\delta_{0}^{j}\zeta_{j+2}\ge0$. It therefore suffices to
+verify
+\begin{equation}\label{eq:lbmargin}
+  S'_{0}\;<\;\frac{c^{2}}{2}\zeta_{4}-2\delta_{0}\zeta_{3}-3\delta_{0}^{2}\zeta_{4}
+  \;=\;3\,\delta_{0}\zeta_{4}\,(v-\delta_{0}),
+\end{equation}
+the equality following from \eqref{eq:d0} together with
+$\delta_{0}(2\zeta_{3}+3v\zeta_{4})=\frac{c^{2}}{2}\zeta_{4}$.
+
+Now $\delta_{0}<\frac{c^{2}\zeta_{4}}{6v\zeta_{4}}=\frac{c^{2}}{6v}<\frac v6$, so
+$\delta_{0}<\frac v6<v<A$. Put $\sigma:=\delta_{0}/A\in(0,\frac16)$. Since $n+A\ge A$ for
+$n\ge0$, we have $\zeta_{j+2}\le A^{-(j-2)}\zeta_{4}$ for $j\ge2$, and hence
+\[
+  S'_{0}\le\zeta_{4}A^{2}\sum_{j\ge3}(j+1)\sigma^{j}
+   =\zeta_{4}A^{2}\,\frac{\sigma^{3}(4-3\sigma)}{(1-\sigma)^{2}} .
+\]
+As $\sigma<\frac16$ we have $\frac{4-3\sigma}{(1-\sigma)^{2}}\le\frac{4}{(5/6)^{2}}
+=\frac{144}{25}$, and as $\delta_{0}<\frac v6$ we have $3(v-\delta_{0})>\frac{5v}{2}$.
+Moreover $\delta_{0}<\frac{c^{2}}{6v}<\frac{v}{6}$, so $\delta_{0}^{2}<\frac{v^{2}}{36}$.
+Therefore \eqref{eq:lbmargin} follows from
+\[
+  \zeta_{4}\,\frac{\delta_{0}^{2}}{A}\cdot\frac{144}{25}\;\le\;\zeta_{4}\cdot\frac{5v}{2},
+  \qquad\text{which is implied by}\qquad
+  \frac{144}{25}\cdot\frac{v^{2}}{36A}\;\le\;\frac{5v}{2},
+\]
+and the last inequality reads $\frac{4v^{2}}{25A}\le\frac{5v}{2}$, i.e.\
+$\frac{8v}{25}\le5(1+v)$, which holds for every $v>0$. This proves the lower bound.
+
+For the upper bound we estimate $T'$. Since $n+A\ge A$, for $k\ge2$ and $n\ge0$ we have
+$(n+A)^{-2k}\le A^{-(2k-4)}(n+A)^{-4}$, hence $\zeta(2k,A)\le A^{-(2k-4)}\zeta(4,A)$;
+therefore, substituting $k=j+3$ in the sum,
+\[
+  T'\le\zeta(4,A)\sum_{k\ge3}\frac{c^{2k-2}}{kA^{2k-4}}
+   =\frac{\zeta(4,A)c^{4}}{A^{2}}\sum_{j\ge0}\frac{\rho^{2j}}{j+3}
+   \le\frac{\zeta(4,A)c^{4}}{A^{2}}\cdot\frac{1}{3(1-\rho^{2})}
+   =\frac{c^{2}}{2}\zeta(4,A)\cdot\frac{2\rho^{2}}{3(1-\rho^{2})},
+\]
+where we used $\frac{1}{j+3}\le\frac13$ and $\rho<1$. Inserting this into
+\eqref{eq:balance} and dropping $S'\ge0$ gives
+$2\delta\zeta(3,A)\le\frac{c^{2}}{2}\zeta(4,A)\big(1+\frac{2\rho^{2}}{3(1-\rho^{2})}\big)$,
+the upper bound in \eqref{eq:locbnd}.
+
+\emph{(iii) Asymptotics.} Write $\zeta_{j}:=\zeta(j,A)$. From
+$\Phi=\zeta_{2}+\frac{c^{2}}{2}\zeta_{4}+\frac{c^{4}}{3}\zeta_{6}+O(c^{6})$ and
+$\zeta(2,A-\delta)=\zeta_{2}+2\delta\zeta_{3}+3\delta^{2}\zeta_{4}+O(\delta^{3})$,
+equating and inserting $\delta=\alpha c^{2}+\beta c^{4}+O(c^{6})$ gives
+$2\zeta_{3}\alpha=\frac{\zeta_{4}}{2}$ and
+$2\zeta_{3}\beta+3\zeta_{4}\alpha^{2}=\frac{\zeta_{6}}{3}$, that is
+$\alpha=\frac{\zeta_{4}}{4\zeta_{3}}$ and
+$\beta=\frac{1}{2\zeta_{3}}\big[\frac{\zeta_{6}}{3}
+-\frac{3\zeta_{4}^{3}}{16\zeta_{3}^{2}}\big]$, which is \eqref{eq:locasym}.
+
+\emph{(iv) Condition (A).} By (ii) it suffices that
+$\frac{c^{2}\zeta_{4}}{4\zeta_{3}}\big(1+\frac{2\rho^{2}}{3(1-\rho^{2})}\big)
+<\frac{v-s}{2}=\frac{c^{2}}{2(v+s)}$, i.e.
+$\frac{(v+s)\zeta_{4}}{2\zeta_{3}}\big(1+\frac{2\rho^{2}}{3(1-\rho^{2})}\big)<1$.
+Term-wise, $(v+s)\zeta_{4}\le\frac{v+s}{1+v}\zeta_{3}$, because
+$\frac{v+s}{(n+A)^{4}}\le\frac{2}{(n+A)^{3}}$ is equivalent to $v+s\le2(n+1+v)$, true for
+all $n\ge0$ since $s<v$. Hence \eqref{eq:condA} is sufficient.
+
+\emph{(iv) Condition (B).} Put $K(\xi)=\frac{1}{c^{2}}\log\frac{1}{1-c^{2}/\xi^{2}}$ and
+$L(\xi)=(\xi-w)^{-2}$ with $w=\frac{v-s}{2}$. With $a=A=1+v$,
+\[
+  \sum_{m\ge1}K(m+v)=\sum_{n\ge0}K(a+n)=\Phi,\qquad
+  \sum_{m\ge1}L(m+v)=\sum_{n\ge0}\frac{1}{(n+1+\frac{v+s}{2})^{2}}
+   =\zeta\Big(2,1+\frac{v+s}{2}\Big),
+\]
+so $t>\frac{v+s}{2}\iff\Phi<\zeta\big(2,1+\frac{v+s}{2}\big)
+\iff\sum_{n\ge0}(K-L)(a+n)<0$. On $[v+\frac12,\infty)$ both $K$ and $L$ are positive,
+decreasing and convex: $L''=6(\xi-w)^{-4}>0$, while
+$K'(\xi)=-\frac{2}{\xi^{3}-c^{2}\xi}$ and
+$K''(\xi)=\frac{2(3\xi^{2}-c^{2})}{(\xi^{3}-c^{2}\xi)^{2}}>0$ because
+$\xi\ge v+\frac12>v>c>c/\sqrt3$. For a convex decreasing $f$ with $f(\infty)=0$ the
+midpoint rule $\int_{k-1/2}^{k+1/2}f\ge f(k)$ gives
+$\sum_{n\ge0}f(a+n)\le\int_{a-1/2}^{\infty}f$, and the trapezoid rule
+$\int_{k}^{k+1}f\le\frac{f(k)+f(k+1)}{2}$ gives
+$\sum_{n\ge0}f(a+n)\ge\int_{a}^{\infty}f+\frac{f(a)}{2}$. Applying these to $K$ and $L$,
+\[
+  \sum_{n\ge0}(K-L)(a+n)\;\le\;\int_{v+1/2}^{\infty}K
+   -\int_{a}^{\infty}L-\frac{L(a)}{2}
+   \;=\;\int_{v+1/2}^{\infty}K-\frac{1}{A-w}-\frac{1}{2(A-w)^{2}}
+   \;=\;\mathcal{E}(x,y),
+\]
+and $\int_{B}^{\infty}K$ is \eqref{eq:intK}, obtained by elementary integration. Hence
+$\mathcal{E}(x,y)<0$ is sufficient for $t>\frac{v+s}{2}$. \qed
+
+\section{Applications}\label{sec:app}
+
+\subsection{Sharpened Gurland inequalities}
+Since $\log\Gg(x,y)=\sum_{k\ge1}\frac{u^{2k}}{k}\zeta(2k,v)$ with all terms positive, and
+since $\zeta(2k,v)\le v^{-2k}\big(1+\frac{v}{2k-1}\big)$ by the integral test, we obtain a
+two-sided refinement of Gurland's inequality \cite{Gurland56}.
+
+\begin{corollary}\label{cor:gurland}
+For all $x\ne y>0$, with $v=\frac{x+y}{2}$ and $\rho_{\Gg}=\frac{|x-y|}{x+y}$,
+\[
+  \frac{(x-y)^{2}}{4}\,\zeta\Big(2,\frac{x+y}{2}\Big)\;\le\;\log\Gg(x,y)\;\le\;
+  -\log\big(1-\rho_{\Gg}^{2}\big)+v\,\Lambda(\rho_{\Gg}),
+\]
+and $\Gg(x,y)>\exp\big(\frac{(x-y)^{2}}{4}\zeta(2,\frac{x+y}{2})\big)>1$. Moreover
+$\log\Gg(x,y)>\frac{(x-y)^{2}}{2(x+y)}$.
+\end{corollary}
+
+\begin{proof}
+The lower bound is the first term of \eqref{eq:main1}. For the upper bound, the
+terms of $\zeta(2k,v)=\sum_{n\ge0}(n+v)^{-2k}$ with $n\ge1$ are dominated by the
+integral over $[0,\infty)$: since $(t+v)^{-2k}$ decreases,
+$\int_{n-1}^{n}(t+v)^{-2k}dt>(n+v)^{-2k}$ for every $n\ge1$, so
+$\zeta(2k,v)\le v^{-2k}+\int_{0}^{\infty}(t+v)^{-2k}dt
+=v^{-2k}\big(1+\frac{v}{2k-1}\big)$; then, with $\rho=\rho_{\Gg}$,
+\[
+  \log\Gg(x,y)\le\sum_{k\ge1}\frac{u^{2k}}{k}\Big(\frac{1}{v^{2k}}
+   +\frac{v^{1-2k}}{2k-1}\Big)
+  =\sum_{k\ge1}\frac{\rho^{2k}}{k}+v\sum_{k\ge1}\frac{\rho^{2k}}{k(2k-1)}
+  =-\log\big(1-\rho^{2}\big)+v\,\Lambda(\rho).
+\]
+The last claim uses
+$\zeta(2,v)=\sum_{n\ge0}(n+v)^{-2}>\int_{0}^{\infty}(t+v)^{-2}dt=\frac1v$,
+because $\int_{n}^{n+1}(t+v)^{-2}dt<(n+v)^{-2}$ for every $n\ge0$.
+\end{proof}
+
+\subsection{Bounds for the beta function}
+Recall $B(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$ and the duplication formula
+$\Gamma(2v)=\frac{2^{2v-1}}{\sqrt\pi}\Gamma(v)\Gamma(v+\frac12)$, where $v=\frac{x+y}{2}$.
+Hence $B(x,y)=\Gg(x,y)\frac{\sqrt\pi\,\Gamma(v)}{2^{2v-1}\Gamma(v+\frac12)}$. Combining
+Corollary \ref{cor:gurland} with Gautschi's inequality
+$v^{1/2}<\frac{\Gamma(v+1)}{\Gamma(v+1/2)}<(v+1)^{1/2}$ \cite{Gautschi74} yields the
+following.
+
+\begin{corollary}\label{cor:beta}
+For all $x,y>0$, with $v=\frac{x+y}{2}$ and $\rho_{\Gg}=\frac{|x-y|}{x+y}$,
+\[
+  \frac{\sqrt\pi\;v^{-1/2}}{2^{2v-1}}\,
+   e^{\frac{(x-y)^{2}}{4}\zeta(2,v)}
+  \;<\;B(x,y)\;<\;
+  \frac{\sqrt\pi\,(v+1)^{1/2}}{2^{2v-1}\,v}\,
+   e^{\,v\Lambda(\rho_{\Gg})-\log(1-\rho_{\Gg}^{2})}.
+\]
+\end{corollary}
+
+\begin{proof}
+Gautschi's inequality with $s=\frac12$ and $x=v$ reads
+$v^{1/2}<\frac{\Gamma(v+1)}{\Gamma(v+1/2)}<(v+1)^{1/2}$; since $\Gamma(v+1)=v\Gamma(v)$,
+this gives $v^{-1/2}<\frac{\Gamma(v)}{\Gamma(v+1/2)}<\frac{(v+1)^{1/2}}{v}$. Insert this
+into the expression for $B(x,y)$ and use Corollary \ref{cor:gurland}.
+\end{proof}
+
+\begin{example}
+For $(x,y)=(1,2)$ one has $v=\frac32$, $\rho_{\Gg}=\frac13$, $\Gg(1,2)=1.273240\ldots$
+and $B(1,2)=\frac12$. The bounds of Corollary \ref{cor:beta} read
+$0.457050<0.5<0.622777$.
+\end{example}
+
+\subsection{Certified computation}
+The two-sided estimate \eqref{eq:rembnd} turns the expansion into an algorithm with a
+certified error.
+
+\begin{corollary}\label{cor:alg}
+Let $x\ne y>0$, $\rho=\rho(x,y)\in(0,1)$, $A=1+v$ and $0<\eps<\tfrac12$. If
+\[
+  m\;\ge\;\Big\lceil\frac{\log\big((1+A)/(\eps(1-\rho^{2}))\big)}{2\log(1/\rho)}\Big\rceil ,
+\]
+then $\big|\log\Gs(x,y)-S_m(x,y)\big|\le\eps$. Moreover, for fixed $x,y$ the number of
+terms required does not exceed
+\[
+  \frac{\log(1/\eps)+\log(2+v)+\frac{1}{1-\rho}}{2\,(1-\rho)},
+\]
+so it is $O\big(\frac{\log(1/\eps)}{1-\rho}\big)$ as $\eps\to0$, the implied constant
+being absolute; the arguments enter only through $\rho$ and through the additive
+term $\log(2+v)$, which is independent of $\eps$.
+\end{corollary}
+
+\begin{proof}
+For every $m\ge1$ we have $2m-1\ge1$, hence $1+\frac{A}{2m-1}\le1+A$ and $\frac1m\le1$;
+therefore \eqref{eq:rembnd} gives
+$0\le R_m\le\frac{(1+A)\rho^{2m}}{1-\rho^{2}}$, which is at most $\eps$ whenever
+$\rho^{2m}\le\frac{\eps(1-\rho^{2})}{1+A}$. Taking logarithms gives the stated threshold.
+For the estimate, use $\log\frac{1}{1-\rho^{2}}\le\frac{1}{1-\rho}$ (valid for
+$0\le\rho<1$, since $\log\frac1{1-\rho^2}\le\frac{\rho^2}{1-\rho^2}\le\frac1{1-\rho}$) and
+$-\log\rho\ge1-\rho$; then
+\[
+  m\le\frac{\log(1+A)+\log\frac1\eps+\log\frac{1}{1-\rho^{2}}}{2\log\frac1\rho}
+  \le\frac{\log(1/\eps)+\log(2+v)+\frac{1}{1-\rho}}{2(1-\rho)} .
+\]
+The leading term as $\eps\to0$ is $\frac{\log(1/\eps)}{2(1-\rho)}$, with the absolute
+constant $\frac12$.
+\end{proof}
+
+\subsection{The multivariate Jensen--Gurland inequality}
+Theorem \ref{thm:multi} with $n=2$ reproduces Theorem \ref{thm:main}. For a concrete
+three-point case take $0<\eps<\tfrac12$ and
+\[
+  x_{1}=x_{2}=v(1+\eps),\qquad x_{3}=v(1-2\eps),
+\]
+so that $\bar x=v$ and $m_{j}=v^{j}\eps^{j}\big(2+(-2)^{j}\big)$; \eqref{eq:multi} becomes
+\[
+  \log\frac{\Gamma\big(v(1+\eps)\big)^{2}\Gamma\big(v(1-2\eps)\big)}{\Gamma(v)^{3}}
+   =3v^{2}\eps^{2}\zeta(2,v)+2v^{3}\eps^{3}\zeta(3,v)
+    +\tfrac92v^{4}\eps^{4}\zeta(4,v)+O(\eps^{5}),
+\]
+all displayed coefficients being positive, in accordance with the multivariate
+Jensen--Gurland inequality of Theorem \ref{thm:multi}.
+
+\section{Numerical verification}\label{sec:num}
+
+All computations were performed with \texttt{mpmath} at $35$--$60$ decimal digits by a
+single self-contained script \texttt{verify.py}, whose nine sections correspond to the
+numbered statements below and which reports \texttt{ok}/\texttt{FAIL} for each of the $50$
+checks (all pass). Table \ref{tab:exp} compares the exact expansion
+\eqref{eq:main2} with $\log\Gs$ computed from $\log\Gamma$; Table \ref{tab:rem} checks the
+two-sided estimate \eqref{eq:rembnd}, including the extreme case $(0.1,199.9)$ where
+$\rho=0.9891$; Table \ref{tab:brk} checks the bracket \eqref{eq:locbnd}; Table
+\ref{tab:cov} documents that the two sufficient conditions of Theorem \ref{thm:loc}(iv)
+cover the whole sampled parameter range; Table \ref{tab:inf} traces the approach of the
+ratio \eqref{eq:conj} to its sharp value $\frac23$, which is reached only in the joint
+limit $v\to\infty$, $\eps\to0$, $v\eps\to0$; and Table \ref{tab:em}
+records an independent Euler--Maclaurin certificate for the midpoint property.
+
+\begin{table}[htbp]\centering\small
+\caption{Exact expansion: $|\log\Gs-S_m|$ for the truncated series \eqref{eq:main2}, and
+the number $m$ of terms used.}
+\label{tab:exp}
+\begin{tabular}{rrrr}
+\toprule
+$x$ & $y$ & $|\log\Gs-S_{m}|$ & $m$\\
+\midrule
+$1$ & $2$ & $3.5\cdot10^{-51}$ & $34$\\
+$1$ & $10$ & $5.1\cdot10^{-48}$ & $142$\\
+$0.5$ & $3$ & $1.0\cdot10^{-49}$ & $68$\\
+$0.2$ & $0.9$ & $2.1\cdot10^{-51}$ & $37$\\
+$3$ & $3.0001$ & $1.0\cdot10^{-61}$ & $6$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{The two-sided estimate \eqref{eq:rembnd}: $\mathrm{lo}=\frac{u^{2m}}{m}\zeta(2m,1+v)$
+and $\mathrm{hi}$ is the right-hand side of \eqref{eq:rembnd}.}
+\label{tab:rem}
+\begin{tabular}{lrrrrr}
+\toprule
+$(x,y)$ & $\rho$ & $m$ & $R_m$ & lo & hi\\
+\midrule
+$(1,10)$ & $0.6923$ & $2$ & $4.1203\cdot10^{-1}$ & $3.1211\cdot10^{-1}$ & $6.9851\cdot10^{-1}$\\
+$(1,10)$ & $0.6923$ & $12$ & $2.2659\cdot10^{-5}$ & $1.2662\cdot10^{-5}$ & $3.0165\cdot10^{-5}$\\
+$(0.5,3)$ & $0.4545$ & $2$ & $3.6843\cdot10^{-2}$ & $3.2677\cdot10^{-2}$ & $5.1563\cdot10^{-2}$\\
+$(0.5,3)$ & $0.4545$ & $12$ & $6.2365\cdot10^{-10}$ & $5.0458\cdot10^{-10}$ & $7.1160\cdot10^{-10}$\\
+$(0.1,199.9)$ & $0.9891$ & $12$ & $2.9021$ & $0.3147$ & $15.9456$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{The bracket \eqref{eq:locbnd} of Theorem \ref{thm:loc}: $\delta=v-t$ against its
+lower bound $\mathrm{lo}$ and the two-term value
+$\mathrm{pre}=\frac{c^{2}\zeta(4,A)}{4\zeta(3,A)}$; the upper bound of \eqref{eq:locbnd} is
+never violated.}
+\label{tab:brk}
+\begin{tabular}{lrrrr}
+\toprule
+$(x,y)$ & $\rho$ & $\delta=v-t$ & lo & pre\\
+\midrule
+$(1,2)$ & $0.2000$ & $0.0199947$ & $0.0115425$ & $0.0197486$\\
+$(0.5,3)$ & $0.4545$ & $0.1186430$ & $0.0635181$ & $0.1108211$\\
+$(2,7)$ & $0.4545$ & $0.2194361$ & $0.1090893$ & $0.2063217$\\
+$(1,10)$ & $0.6923$ & $0.6573045$ & $0.2924374$ & $0.5586888$\\
+$(20,100)$ & $0.6557$ & $4.9818888$ & $2.2129255$ & $4.4074125$\\
+$(0.1,199.9)$ & $0.9891$ & $26.6699099$ & $8.2958322$ & $16.5501874$\\
+$(100,101)$ & $0.0049$ & $0.0004125$ & $0.0002068$ & $0.0004125$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{Coverage of Theorem \ref{thm:loc}(iv). The first family is the coarse
+$11$-point grid $\{10^{-3},10^{-2},10^{-1},\frac12,1,2,5,20,10^{2},10^{3},10^{4}\}^{2}$,
+whose $121$ points consist of $11$ diagonal pairs $x=y$ and $110$ off-diagonal pairs. On the
+diagonal $\rho=c/A=0$ and both halves of \eqref{eq:locbnd} degenerate, so only the $110$
+off-diagonal pairs are counted, and that is the number reported in the cases column. The
+other two families are $x=v(1+r)$, $y=v(1-r)$ with $r=j/400$, $j=1,\dots,399$. For those,
+$\rho(x,y)=\frac{vr}{1+v}$ runs over $(0,\frac{v}{1+v})$ in steps of
+$\frac{v}{400(1+v)}<\frac1{400}$, so the range of $\rho$ depends on $v$. A
+configuration may satisfy both conditions, so the (A) and (B) columns need not add up to
+the number of cases; in the coarse grid $22$ of the $110$ off-diagonal pairs satisfy both,
+and in every sample at least one of the two conditions holds, so the midpoint property is
+certified throughout.}
+\label{tab:cov}
+\begin{tabular}{lrrrr}
+\toprule
+sample & cases & (A) & (B) & neither\\
+\midrule
+coarse grid & $110$ & $42$ & $90$ & $0$\\
+$v=200$ & $399$ & $43$ & $396$ & $0$\\
+$v=5000$ & $399$ & $8$ & $399$ & $0$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{The ratio $\theta=\big(t-\sqrt{xy}\big)/\big(\frac{x+y}{2}-\sqrt{xy}\big)$ along
+$x=v(1+\eps)$, $y=v(1-\eps)$. For a \emph{fixed} $\eps$ it decreases to
+$\frac23+g(\eps)$ with $g(\eps)>0$ (numerically $g(\eps)\approx5.6\,\eps^{2}$, for
+instance $g(10^{-1})=5.60\cdot10^{-5}$), so the sharp value $\frac23$ is approached only in
+the joint limit $v\to\infty$, $\eps\to0$, $v\eps\to0$. The penultimate column is such a
+path ($\eps=v^{-2}$), and there $\theta=\frac23+\frac{1}{6v}+O(v^{-2})$, as the
+elementary computation in the remark after Theorem~\ref{conj:sharp} shows.}
+\label{tab:inf}
+\begin{tabular}{rrrrr}
+\toprule
+$v$ & $\eps=10^{-1}$ & $\eps=10^{-3}$ & $\eps=v^{-2}$ & limit\\
+\midrule
+$10^{2}$ & $0.668396737$ & $0.668333257$ & $0.668333250$ & $0.666666667$\\
+$10^{3}$ & $0.666890050$ & $0.666833339$ & $0.666833333$ & $0.666666667$\\
+$10^{4}$ & $0.666739371$ & $0.666683339$ & $0.666683333$ & $0.666666667$\\
+$10^{5}$ & $0.666724303$ & $0.666668339$ & $0.666668333$ & $0.666666667$\\
+$10^{6}$ & $0.666722796$ & $0.666666839$ & $0.666666833$ & $0.666666667$\\
+$10^{7}$ & $0.666722645$ & $0.666666689$ & $0.666666683$ & $0.666666667$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{Euler--Maclaurin certificate for the midpoint property, evaluated on the
+$110$ off-diagonal pairs of the coarse grid of Table \ref{tab:cov} (first three rows)
+and on four further pairs (last row). With
+$v=\frac{x+y}{2}$, $c=\frac{|x-y|}{2}$, $s=\sqrt{xy}$, $a=A=1+v$, write
+$G=K-L$, where $K(\xi)=\frac{1}{c^{2}}\log\frac{1}{1-c^{2}/\xi^{2}}$ and
+$L(\xi)=(\xi-w)^{-2}$ with $w=\frac{v-s}{2}$. The partial sum
+$E_r=\int_{a}^{\infty}G+\frac{G(a)}{2}-\sum_{j=1}^{r}\frac{B_{2j}}{(2j)!}G^{(2j-1)}(a)$
+approximates $\Sigma=\sum_{n\ge0}G(a+n)$, and the remainder obeys the classical
+bound $|R_r|\le\frac{2\zeta(2r)}{(2\pi)^{2r}}\int_{a}^{\infty}|G^{(2r)}|$,
+because the periodic Bernoulli polynomial $\tilde B_{2r}$ attains its extreme
+value $B_{2r}$ at the endpoints. Since $\Sigma<0$ is exactly the midpoint property (of
+which condition (B) of Theorem~\ref{thm:loc} is the sufficient criterion
+$\Sigma\le\mathcal{E}<0$), the table certifies the midpoint property for each sampled
+configuration directly, without passing through the midpoint and trapezoid estimates used
+there. The last row compares
+$E_r$ with $\Sigma$ computed independently, as the difference between the
+exact value of $\sum_{m\ge1}L(m+v)=\zeta\big(2,1+\frac{v+s}{2}\big)$ and a
+cancellation-free Euler--Maclaurin evaluation of $\sum_{m\ge1}K(m+v)$; it is
+evaluated for all six orders $r=1,\dots,6$, although only $r\le5$ certify negativity
+for every sampled configuration.}
+\label{tab:em}
+\begin{tabular}{llr}
+\toprule
+quantity & value & attained at\\
+\midrule
+worst $E_r+|R_r|$, $r=1,\dots,5$ & $-1.9844\cdot10^{-5}$ & $(1000,10000)$\\
+configurations with $E_r+|R_r|\ge0$ & $0$ of $110$ & ---\\
+largest $|E_r-\Sigma|/|R_r|$, $r=1,\dots,6$ & $0.72$ & $(0.01,10^{4})$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Several further checks are worth recording. First, for $(x,y)=(100,1)$ one has
+$Q(100,1)=4.5>1$, so Corollary~1 of \cite{Wisniewska25} does not apply, yet
+$\rho(100,1)=0.96117<1$ and the expansion \eqref{eq:main2} converges, with tails
+$R_{20}=1.478\cdot10^{-1}$, $R_{100}=4.359\cdot10^{-5}$ and
+$R_{1000}=5.117\cdot10^{-37}$. Second, the optimality statement in Theorem \ref{thm:rem}
+is confirmed: for $(x,y)=(2,7)$ one has $2\log\rho=-1.5769147$, while the computed values of
+$\frac1m\log R_m$ are $-1.8184$ ($m=5$), $-1.7829$ ($m=10$), $-1.7157$ ($m=20$),
+$-1.6635$ ($m=40$), $-1.6288$ ($m=80$) and $-1.6072$ ($m=160$), approaching the predicted
+limit monotonically. Third, the three-term expansion \eqref{eq:locasym} is confirmed: for
+$(x,y)=(10,11)$ one has $v-t=0.00378192138106$, while the two-term formula gives
+$0.00378011106367$ and the three-term formula $0.00378191965719$, the residual being
+$-1.7\cdot10^{-9}$. Fourth, the large-argument asymptotics of Theorem \ref{thm:asym}: for
+$(x,y)=(10^{6},2\cdot10^{6})$, where $v=1.5\cdot10^{6}$ and
+$\rho=\frac{|x-y|}{2+x+y}=0.333333\ldots$, one has $\log\Gs=169898.977904\ldots$ against the
+prediction $(1+v)\Lambda(\rho)=\frac{u^{2}}{1+v}H(\rho)=169898.919012\ldots$, a relative
+error of
+$3.5\cdot10^{-7}$, which decreases as the arguments grow ($2.7\cdot10^{-5}$ at
+$(10^{4},3\cdot10^{4})$). Fifth, Corollaries \ref{cor:gurland} and \ref{cor:beta} were
+verified on the sampled configurations; for instance $B(1,2)=\frac12$ lies between
+$0.457050$ and $0.622777$, and the three-point expansion displayed in
+Section \ref{sec:app} agrees with $\log\Gamma$ to $19$ digits.
+
+\section{Concluding remarks}
+
+Theorem \ref{thm:main} is the classical Hurwitz-zeta expansion \eqref{eq:classical} of
+$\log\Gamma$, specialized to the second-order symmetric difference that defines
+$\log\Gs$. In that specialization it identifies the mechanism behind the expansion of
+\cite{Wisniewska25}: the logarithm of Gurland's ratio is a Taylor remainder about the
+midpoint, and the poles of $\Gamma$ at the non-positive integers determine both the
+coefficients (Hurwitz zeta values) and the exact region of convergence, which is the entire
+quadrant. Two of the three problems posed in \cite{Wisniewska25} are thereby answered
+affirmatively, and the quantitative content of the third is the subject of
+Theorems \ref{thm:loc} and \ref{conj:sharp}. For the third we proved
+uniqueness of $t$, its expansion up to order $c^{4}$, an explicit two-sided bracket, the
+midpoint property $t>\frac12\big(\sqrt{xy}+\frac{x+y}{2}\big)$ under either of the two
+complementary conditions (A) and (B) of Theorem \ref{thm:loc}, and finally the sharp bound
+$\theta>\frac23$ of Theorem \ref{conj:sharp}, whose proof uses neither (A) nor (B) and shows
+the constant $\frac23$ to be optimal and not attained. Three directions seem worth
+pursuing:
+\begin{enumerate}
+\item[(a)] a proof of Conjecture \ref{conj:ab}, i.e.\ that conditions (A) and (B) cover
+  the whole quadrant; the sharp bound $\frac23$ itself is now Theorem \ref{conj:sharp},
+  whose proof uses neither (A) nor (B); the extremal configuration for the sharp constant is
+  $v\to\infty$ with $|x-y|/(x+y)\to0$, as recorded in the remark following
+  Theorem \ref{conj:sharp};
+\item[(b)] the $q$-analogue: replacing $\Gamma$ by the $q$-gamma function $\Gamma_{q}$,
+  for which the role of $\zeta(2k,\cdot)$ is played by the Jackson $q$-zeta values, and the
+  sign-regularity of the corresponding kernel;
+\item[(c)] quantitative versions of Theorem \ref{thm:multi}, such as remainder estimates
+  uniform in $n$ and a central limit theorem for the corresponding Jensen gaps.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Statements and declarations.} The author has no competing interests to
+declare. All numerical results reported in Section \ref{sec:num} were produced by the
+accompanying script \texttt{verify.py} and can be reproduced exactly with \texttt{mpmath}
+by running \texttt{python verify.py}.
+
+\begin{thebibliography}{99}
+\bibitem{Alzer01} H.~Alzer, \emph{Sharp inequalities for the beta function}, Indag. Math.
+(N.S.) \textbf{12} (2001), 15--21.
+\bibitem{ChenChoi17} C.-P.~Chen and J.~Choi, \emph{Completely monotonic functions related
+to Gurland's ratio for the gamma function}, Math. Inequal. Appl. \textbf{20} (2017),
+651--659.
+\bibitem{DLMF} NIST Digital Library of Mathematical Functions, Release 1.2.4,
+\url{https://dlmf.nist.gov/}, \S2.10 (Euler--Maclaurin formula), \S5.15 (polygamma
+functions), \S25.11 (Hurwitz zeta function).
+\bibitem{Gautschi74} W.~Gautschi, \emph{Some mean value inequalities for the gamma
+function}, SIAM J. Math. Anal. \textbf{5} (1974), 282--292.
+\bibitem{Gurland56} J.~Gurland, \emph{An inequality satisfied by the gamma function},
+Skand. Aktuarietidskr. (1956), 171--172.
+\bibitem{Kairies83} H.~Kairies, \emph{An inequality for Krull solutions of a certain
+difference equation}, in: General Inequalities 3 (Oberwolfach 1981), Internat.
+Schriftenreihe Numer. Math. \textbf{64}, Birkh\"auser, Basel, 1983, 277--280.
+\bibitem{LaforgiaNatalini13} A.~Laforgia and P.~Natalini, \emph{On some inequalities for
+the gamma function}, Adv. Dyn. Syst. Appl. \textbf{8} (2013), 261--267.
+\bibitem{Merkle05} M.~Merkle, \emph{Gurland's ratio for the gamma function},
+Comput. Math. Appl. \textbf{49} (2005), 389--406.
+\bibitem{Wisniewska25} H.~Wi\'sniewska, \emph{Some inequalities for Gurland's ratio of the
+gamma functions}, arXiv:2512.07028 [math.CA], 2025.
+\bibitem{Alzer97} H.~Alzer, \emph{On some inequalities for the gamma and psi functions},
+Math. Comp. \textbf{66} (1997), 373--389.
+\bibitem{Berndt85} B.~C.~Berndt, \emph{The gamma function and the Hurwitz zeta-function},
+Amer. Math. Monthly \textbf{92} (1985), DOI 10.1080/00029890.1985.11971552.
+\bibitem{Lin13} L.~Lin, \emph{Further refinements of Gurland's formula for $\pi$},
+J. Inequal. Appl. \textbf{2013} (2013), 2013:48.
+\bibitem{MoustafaMahmoud26} H.~Moustafa and M.~Mahmoud, \emph{New bounds for Gurland-type
+ratios in terms of the generalized Nielsen's beta function}, Gulf J. Math. \textbf{23}
+(2026), no.~2, 1--18, DOI 10.56947/x7dwnj62.
+\bibitem{Qi10} F.~Qi, \emph{Bounds for the ratio of two gamma functions},
+J. Inequal. Appl. \textbf{2010} (2010), Article ID 493058.
+\bibitem{Srivastava88} H.~M.~Srivastava, \emph{Sums of certain series of the Riemann zeta
+function}, J. Math. Anal. Appl. \textbf{134} (1988), no.~1, 129--140,
+DOI 10.1016/0022-247X(88)90013-3.
+\bibitem{SrivastavaChoi01} H.~M.~Srivastava and J.~Choi, \emph{Series Associated with the
+Zeta and Related Functions}, Kluwer Academic Publishers, Dordrecht, 2001.
+\bibitem{TianYang21} J.-F.~Tian and Z.-H.~Yang, \emph{Asymptotic expansions of Gurland's
+ratio and sharp bounds for their remainders}, J. Math. Anal. Appl. \textbf{493} (2021),
+124545.
+\bibitem{YangTian24} Z.-H.~Yang and J.-F.~Tian, \emph{Complete monotonicity of the remainder
+of an asymptotic expansion of the generalized Gurland's ratio}, Math. Inequal. Appl.
+\textbf{27} (2024), DOI 10.7153/mia-2024-27-18.
+\bibitem{YangZheng16} Z.-H.~Yang and S.-Z.~Zheng, \emph{Monotonicity of a mean related to
+polygamma functions with an application}, J. Inequal. Appl. \textbf{2016} (2016),
+Art.~216, DOI 10.1186/s13660-016-1155-4.
+\bibitem{YangZheng19} Z.-H.~Yang and S.-Z.~Zheng, \emph{Complete monotonicity and
+inequalities involving Gurland's ratios of gamma functions}, Math. Inequal. Appl.
+\textbf{22} (2019), no.~1, 97--109, DOI 10.7153/mia-2019-22-07.
+\end{thebibliography}
+
+\end{document}
